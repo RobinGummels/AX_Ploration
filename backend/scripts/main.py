@@ -89,13 +89,15 @@ def run_agent(query: str, verbose: bool = False) -> Dict[str, Any]:
 
 def main():
     """CLI entry point."""
-    if len(sys.argv) < 2:
-        print("Usage: python -m scripts.main <query>")
-        print("Example: python -m scripts.main \"Finde alle Wohngebäude in Münster\"")
-        sys.exit(1)
+    import argparse
     
-    query = " ".join(sys.argv[1:])
-    result = run_agent(query, verbose=True)
+    parser = argparse.ArgumentParser(description="AX_Ploration Agent")
+    parser.add_argument("query", help="Natural language query about buildings, their functions and attributes in Berlin")
+    parser.add_argument("-v", "--verbose", action="store_true", help="Print processing steps")
+    
+    args = parser.parse_args()
+    
+    result = run_agent(args.query, verbose=args.verbose)
     
     if result.get("error"):
         sys.exit(1)
