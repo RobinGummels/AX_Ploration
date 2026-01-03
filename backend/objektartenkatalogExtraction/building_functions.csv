@@ -1,0 +1,235 @@
+code;name;description
+1000;Wohngebäude;'Wohngebäude' ist ein Gebäude, das zum Wohnen genutzt wird.
+1010;Wohnhaus;'Wohnhaus' ist ein Gebäude, in dem Menschen ihren Wohnsitz haben.
+1020;Wohnheim;'Wohnheim' ist ein Gebäude, das nach seiner baulichen Anlage und Ausstattung zur Unterbringung von Studenten, Arbeitern u. a. bestimmt ist.
+1021;Kinderheim;'Kinderheim' ist ein Gebäude, welches zur Unterbringung und Betreuung von Kindern, die vorübergehend oder dauerhaft getrennt von ihren leiblichen Eltern oder sonstigen Erziehungsberechtigten leben, dient.
+1022;Seniorenheim;'Seniorenheim' ist ein Gebäude, welches zur Unterbringung, Betreuung und Pflege von Menschen dient.
+1023;Schwesternwohnheim;'Schwesternwohnheim' ist ein Gebäude, in dem Angehörige eines Ordens oder Pflegepersonal wohnen.
+1024;Studenten-, Schülerwohnheim;'Studenten-, Schülerwohnheim' ist ein Gebäude, in welchem Studenten bzw. Schüler wohnen.
+1025;Schullandheim;'Schullandheim' ist ein Gebäude in ländlicher Region, in dem sich Schulklassen jeweils für einige Tage zur Erholung und zum Unterricht aufhalten.
+1100;Gemischt genutztes Gebäude mit Wohnen;'Gemischt genutztes Gebäude mit Wohnen' ist ein Gebäude, in dem sowohl gewohnt wird, als auch Teile des Gebäudes zum Anbieten von Dienstleistungen, zur Durchführung von öffentlichen oder privaten Verwaltungsarbeiten, zur gewerblichen oder industriellen Tätigkeit genutzt werden.
+1110;Wohngebäude mit Gemeinbedarf;'Wohngebäude mit Gemeinbedarf' ist ein Gebäude, das vorrangig dem Wohnen als auch der Allgemeinheit, z. B. zur Versammlung, dient.
+1120;Wohngebäude mit Handel und Dienstleistungen;'Wohngebäude mit Handel und Dienstleistungen' ist ein Gebäude, das vorrangig dem Wohnen als auch dem Anbieten von Arbeitsleistungen, die nicht im Zusammenhang mit der Produktion von materiellen Gütern stehen, dient.
+1121;Wohn- und Verwaltungsgebäude;'Wohn- und Verwaltungsgebäude' ist ein Gebäude, in dem gewohnt wird und in dem sich Räume einer öffentlichen oder privaten Verwaltung befinden.
+1122;Wohn- und Bürogebäude;'Wohn- und Bürogebäude' ist ein Gebäude, in dem gewohnt wird und in dem sich Büros mehrerer Unternehmen befinden.
+1123;Wohn- und Geschäftsgebäude;'Wohn- und Geschäftsgebäude' ist ein Gebäude, in dem gewohnt wird und in dem sich ein oder mehrere Geschäfte befinden, in denen Waren zum Verkauf angeboten werden.
+1130;Wohngebäude mit Gewerbe und Industrie;'Wohngebäude mit Gewerbe und Industrie' ist ein Gebäude, das vorrangig dem Wohnen und dem Anbieten von gewerblichen oder industriellen Tätigkeiten dient.
+1131;Wohn- und Betriebsgebäude;'Wohn- und Betriebsgebäude' ist ein Gebäude, das sowohl zum Wohnen als auch zur Produktion von Gütern dient.
+1210;Land- und forstwirtschaftliches Wohngebäude;'Land- und forstwirtschaftliches Wohngebäude' ist ein Gebäude, in dem Beschäftigte der Land- und Forstwirtschaft wohnen.
+1220;Land- und forstwirtschaftliches Wohn- und Betriebsgebäude;'Land- und forstwirtschaftliches Wohn- und Betriebsgebäude' ist ein Gebäude, das zum Wohnen und zur Produktion von land- und forstwirtschaftlichen Gütern dient.
+1221;Bauernhaus;'Bauernhaus' ist das Wohn- und Betriebsgebäude eines Landwirts.
+1222;Wohn- und Wirtschaftsgebäude;'Wohn- und Wirtschaftsgebäude' ist ein Gebäude, in dem gewohnt wird und das zum Betrieb eines wirtschaftlichen Anwesens notwendig ist.
+1223;Forsthaus;'Forsthaus' ist ein Gebäude, das gleichzeitig Wohnhaus und Dienststelle der Försterin oder des Försters ist.
+1310;Gebäude zur Freizeitgestaltung;'Gebäude zur Freizeitgestaltung' ist ein Gebäude, das der Ausübung von freizeitlichen Aktivitäten dient.
+1311;Ferienhaus;'Ferienhaus' ist ein Gebäude, das zum vorübergehenden Aufenthalt von Gästen dient.
+1312;Wochenendhaus;'Wochenendhaus' ist ein Gebäude, in dem dauerhaftes Wohnen möglich, aber nicht gestattet ist. Es dient nur zum zeitlich begrenzten Aufenthalt in der Freizeit, beispielsweise am Wochenende oder im Urlaub und steht i. d. R. in einem besonders dafür ausgewiesenen Gebiet (Wochenendhausgebiet).
+1313;Gartenhaus;'Gartenhaus' ist ein eingeschossiges Gebäude in einfacher Ausführung und dient hauptsächlich der Unterbringung von Gartengeräten.
+2000;Gebäude für Wirtschaft oder Gewerbe;'Gebäude für Wirtschaft oder Gewerbe' ist ein Gebäude, das der Produktion von Waren, der Verteilung von Gütern und dem Angebot von Dienstleistungen dient.
+2010;Gebäude für Handel und Dienstleistungen;'Gebäude für Handel und Dienstleistungen' ist ein Gebäude, in dem Arbeitsleistungen, die nicht der Produktion von materiellen Gütern dienen, angeboten werden. Dazu gehört u. a. der Handel (Ankauf, Transport, Verkauf) mit Gütern, Kapital oder Wissen.
+2020;Bürogebäude;'Bürogebäude' ist ein Gebäude, in dem private Wirtschaftunternehmen ihre Verwaltungsarbeit durchführen.
+2030;Kreditinstitut;'Kreditinstitut' ist ein Gebäude, in dem Unternehmen gewerbsmäßig Geldgeschäfte (Verwaltung von Ersparnissen, Vergabe von Krediten) betreiben, die einen kaufmännisch eingerichteten Geschäftsbetrieb erfordern.
+2040;Versicherung;'Versicherung' ist ein Gebäude, in dem Versicherungsunternehmen gewerbsmäßige Versicherungsgeschäfte betreiben.
+2050;Geschäftsgebäude;'Geschäftsgebäude' ist ein Gebäude, in dem Ein- und Verkauf von Waren stattfindet.
+2051;Kaufhaus;'Kaufhaus' ist ein Gebäude, meist mit mehreren Stockwerken, in dem breite Warensortimente zum Kauf angeboten werden.
+2052;Einkaufszentrum;'Einkaufszentrum' ist ein Gebäude oder Gebäudekomplex, in dem mehrere Geschäfte untergebracht sind.
+2053;Markthalle;'Markthalle' ist ein Gebäude, in dem Marktstände fest oder vorübergehend aufgebaut sind.
+2054;Laden;'Laden' ist ein Geschäft, in dem Waren des Einzelhandels angeboten und verkauft werden.
+2055;Kiosk;'Kiosk' ist ein kleines in meist leichter Bauweise errichtetes Gebäude, das als Verkaufseinrichtung für ein beschränktes Warenangebot dient.
+2056;Apotheke;'Apotheke' ist ein Geschäft, in dem Arzneimittel hergestellt und verkauft werden.
+2060;Messehalle;'Messehalle' ist ein Gebäude, das zur Ausstellung von Kunstgegenständen oder Wirtschaftsgütern dient.
+2070;Gebäude für Beherbergung;'Gebäude für Beherbergung' ist ein Gebäude, das der Unterbringung von Gästen dient.
+2071;Hotel, Motel, Pension;'Hotel, Motel, Pension' ist ein Gebäude mit Beherbergungs- und/oder Verpflegungsbetrieb nach Service, Ausstattung und Qualität in verschiedene Kategorien eingeteilt. Das Motel ist besonders eingerichtet für Reisende mit Kraftfahrzeug an verkehrsreichen Straßen.
+2072;Jugendherberge;'Jugendherberge' ist eine zur Förderung von Jugendreisen dienende Aufenthalts- und Übernachtungsstätte.
+2073;Hütte (mit Übernachtungsmöglichkeit);'Hütte (mit Übernachtungsmöglichkeit)' ist ein Gebäude außerhalb von Ortschaften, meist in den Bergen, in dem Menschen übernachten und Schutz suchen können.
+2074;Campingplatzgebäude;'Campingplatzgebäude' ist ein Gebäude auf einem angelegten Platz, z. B. mit Strom- und Wasseranschlüssen sowie sanitären Einrichtungen.
+2080;Gebäude für Bewirtung;'Gebäude für Bewirtung' ist ein Gebäude, in dem die Möglichkeit besteht Mahlzeiten und Getränke einzunehmen.
+2081;Gaststätte, Restaurant;'Gaststätte, Restaurant' ist ein Gebäude, in dem gegen Entgelt Mahlzeiten und Getränke zum Verzehr angeboten werden.
+2082;Hütte (ohne Übernachtungsmöglichkeit);'Hütte (ohne Übernachtungsmöglichkeit)' ist ein Gebäude außerhalb von Ortschaften, meist in den Bergen, in dem Menschen Schutz suchen können und in dem die Möglichkeit besteht, Mahlzeiten und Getränke einzunehmen.
+2083;Kantine;'Kantine' ist ein Gebäude, das einem Unternehmen, einer Behörde oder einer öffentlichen Einrichtung zur Ausgabe von Mahlzeiten und Getränken dient.
+2090;Freizeit- und Vergnügungsstätte;'Freizeit- und Vergnügungsstätte' ist ein Gebäude, in dem man in seiner Freizeit bestimmte Angebote wahrnehmen kann.
+2091;Festsaal;'Festsaal' ist ein Gebäude, in dem Feierlichkeiten ausgerichtet werden.
+2092;Kino;'Kino' ist ein Gebäude, in dem Filme für ein Publikum abgespielt werden.
+2093;Kegel-, Bowlinghalle;'Kegel-, Bowlinghalle' ist ein Gebäude, in dem die Sportarten Kegeln oder Bowling ausgeübt werden.
+2094;Spielkasino;'Spielkasino' ist eine Einrichtung, in der öffentlich zugänglich staatlich konzessioniertes Glücksspiel betrieben wird.
+2095;Spielhalle;'Spielhalle' ist eine Einrichtung, in der durch die Spielverordnung geregeltes Automatenspiel betrieben wird.
+2100;Gebäude für Gewerbe und Industrie;'Gebäude für Gewerbe und Industrie' ist ein Gebäude, dass vorwiegend gewerblichen oder industriellen Zwecken dient.
+2110;Produktionsgebäude;'Produktionsgebäude' ist ein Gebäude, das zur Herstellung von Wirtschaftsgütern dient.
+2111;Fabrik;'Fabrik' ist ein Gebäude mit technischen Anlagen zur Herstellung von Waren in großen Mengen.
+2112;Betriebsgebäude;'Betriebsgebäude' ist ein Gebäude, in dem Arbeitskräfte und Produktionsmittel zusammengefasst sind, um Leistungen zu erbringen oder Güter herzustellen.
+2113;Brauerei;'Brauerei' ist ein Gebäude, in dem Getränke durch Gärung hergestellt werden.
+2114;Brennerei;'Brennerei' ist ein Gebäude, in dem alkoholische Getränke durch Destillation hergestellt werden.
+2120;Werkstatt;'Werkstatt' ist ein Gebäude, in dem mit Werkzeugen und Maschinen Güter hergestellt oder repariert werden.
+2121;Sägewerk;'Sägewerk' ist ein Gebäude, in dem Holz zugeschnitten wird.
+2130;Tankstelle;'Tankstelle' ist ein Gebäude, in dem hauptsächlich Kfz-Kraftstoffe, Schmiermittel und Zubehör verkauft werden, meist mit Einrichtungen zur Durchführung von Wartungs- und Pflegearbeiten von Kraftfahrzeugen.
+2131;Waschstraße, Waschanlage, Waschhalle;'Waschstraße, Waschanlage, Waschhalle' ist ein Gebäude, in dem Fahrzeuge gereinigt werden.
+2140;Gebäude für Vorratshaltung;'Gebäude für Vorratshaltung' ist ein Gebäude, in dem Güter vorübergehend gelagert werden.
+2141;Kühlhaus;'Kühlhaus' ist ein Gebäude, das zur Lagerung von Gütern mit niedriger Temperatur dient.
+2142;Speichergebäude;'Speichergebäude' ist ein Gebäude zur Vorratshaltung.
+2143;Lagerhalle, Lagerschuppen, Lagerhaus;'Lagerhalle, Lagerschuppen, Lagerhaus' ist ein Gebäude zur Vorratshaltung von Gütern (z. B. Material, Fertigerzeugnissen).
+2150;Speditionsgebäude;'Speditionsgebäude' bezeichnet ein Gebäude mit technischen, organisatorischen und wirtschaftlichen Einrichtungen, die der Beförderung von Gütern über räumliche Entfernungen dienen.
+2160;Gebäude für Forschungszwecke;'Gebäude für Forschungszwecke' ist ein Gebäude, in dem Forschung betrieben wird.
+2170;Gebäude für Grundstoffgewinnung;'Gebäude zur Grundstoffgewinnung' ist ein Gebäude zur Gewinnung von Grundstoffen (z.B. Erz oder Kohle).
+2171;Bergwerk;'Bergwerk' ist ein Gebäude zur Gewinnung von Rohstoffen aus der Erde.
+2172;Saline;'Saline' ist eine Anlage zur Gewinnung von Kochsalz.
+2180;Gebäude für betriebliche Sozialeinrichtung;'Gebäude für betriebliche Sozialeinrichtung' ist ein Gebäude, in dem Arbeitnehmern betriebliche Zusatzangebote gewährt werden (z. B. Kinderbetreuung, Betriebssport oder Beratung).
+2200;Sonstiges Gebäude für Gewerbe und Industrie;'Sonstiges Gebäude für Gewerbe und Industrie' ist ein Gebäude, das zum Anbieten von gewerblichen oder industriellen Tätigkeiten genutzt wird.
+2210;Mühle;'Mühle' ist ein Gebäude, das zum Mahlen, zum Sägen, zum Pumpen oder zur Erzeugung von Strom dient.
+2211;Windmühle;'Windmühle' ist ein Gebäude, dessen wesentlicher Bestandteil die an einer Achse befestigten Flächen (Flügel, Schaufeln) sind, die von der Windkraft in Drehung versetzt werden.
+2212;Wassermühle;'Wassermühle' ist ein Gebäude mit einem Mühlrad, das von Wasser angetrieben wird.
+2213;Schöpfwerk;'Schöpfwerk' ist ein Gebäude, in dem Pumpen Wasser einem höher gelegenen Vorfluter zuführen u. a. zur künstlichen Entwässerung von landwirtschaftlich genutzten Flächen und im Falle von Polder- und Mündungsschöpfwerken auch zur Sicherstellung des Hochwasser- oder Überschwemmungsschutzes.
+2220;Wetterstation;'Wetterstation' ist ein Gebäude, in dem meteorologische Daten erfasst und ausgewertet werden.
+2310;Gebäude für Handel und Dienstleistung mit Wohnen;'Gebäude für Handel und Dienstleistungen mit Wohnen' ist ein Gebäude, in dem Arbeitsleistungen, die nicht der Produktion von materiellen Gütern dienen, angeboten werden und in dem zusätzlich gewohnt wird.
+2320;Gebäude für Gewerbe und Industrie mit Wohnen;'Gebäude für Gewerbe und Industrie mit Wohnen' ist ein Gebäude, das zum Anbieten von gewerblichen oder industriellen Tätigkeiten genutzt und in dem zusätzlich gewohnt wird.
+2400;Betriebsgebäude zu Verkehrsanlagen (allgemein);'Betriebsgebäude zu Verkehrsanlagen (allgemein)' ist ein Gebäude zur Aufrechterhaltung, Instandhaltung oder Überwachung von Verkehrsanlagen.
+2410;Betriebsgebäude für Straßenverkehr;'Betriebsgebäude für Straßenverkehr' ist ein Gebäude zur Aufrechterhaltung oder Instandhaltung des Straßenverkehrs.
+2411;Straßenmeisterei;'Straßenmeisterei' ist das Verwaltungsgebäude einer Dienststelle, die für den ordnungsgemäßen Zustand von Straßen verantwortlich ist.
+2412;Wartungshalle;'Wartungshalle' ist ein Gebäude zur Wartung oder Instandsetzung.
+2420;Betriebsgebäude für Schienenverkehr;'Betriebsgebäude für Schienenverkehr' ist ein Gebäude zur Aufrechterhaltung oder Instandhaltung des Schienenverkehrs.
+2421;Bahnwärterhaus;'Bahnwärterhaus' ist ein Gebäude, das als Dienstwohnung für Bahnwärter dient.
+2422;Lokschuppen, Wagenhalle;'Lokschuppen, Wagenhalle' ist ein Gebäude, das als Unterstellplatz für Schienenfahrzeuge dient.
+2423;Stellwerk, Blockstelle;'Stellwerk, Blockstelle' ist ein Gebäude, von dem aus die Signale und Weichen im Bahnhof und auf der freien Strecke für die Züge gestellt werden.
+2424;Betriebsgebäude des Güterbahnhofs;'Betriebsgebäude des Güterbahnhofs' ist ein Gebäude zur Aufrechterhaltung oder Überwachung des Güterzugverkehrs.
+2430;Betriebsgebäude für Flugverkehr;'Betriebsgebäude für Flugverkehr' ist ein Gebäude zur Aufrechterhaltung oder Überwachung des Flugverkehrs.
+2431;Flugzeughalle;'Flugzeughalle' ist ein Gebäude, in dem Flugzeuge abgestellt, inspiziert und repariert werden.
+2440;Betriebsgebäude für Schiffsverkehr;'Betriebsgebäude für Schiffsverkehr' ist ein Gebäude zur Aufrechterhaltung oder Überwachung des Schiffsverkehrs.
+2441;Werft (Halle);'Werft (Halle)' ist ein Gebäude, in dem Schiffe gebaut und repariert werden.
+2442;Dock (Halle);'Dock (Halle)' ist ein Gebäude, in dem Schiffe trockengelegt werden.
+2443;Betriebsgebäude zur Schleuse;'Betriebsgebäude zur Schleuse' ist ein Gebäude, in dem der Schleusenbetrieb gesteuert und überwacht wird.
+2444;Bootshaus;'Bootshaus' ist ein Gebäude, das als Unterstellplatz für kleinere Wasserfahrzeuge dient.
+2450;Betriebsgebäude zur Seilbahn;'Betriebsgebäude zur Seilbahn' ist ein Gebäude, in dem der Seilbahnbetrieb gesteuert und überwacht wird.
+2451;Spannwerk zur Drahtseilbahn;'Spannwerk zur Drahtseilbahn' ist ein Gebäude, in dem das Seil der Seilbahn gespannt und umgelenkt wird.
+2460;Gebäude zum Parken;'Gebäude zum Parken' ist ein Gebäude zum Abstellen von Fahrzeugen.
+2461;Parkhaus;'Parkhaus' ist ein Gebäude, in dem Fahrzeuge auf mehreren Etagen abgestellt werden.
+2462;Parkdeck;'Parkdeck' ist ein Gebäude, in dem Fahrzeuge auf einer Etage abgestellt werden.
+2463;Garage;'Garage' ist ein Gebäude, in dem Fahrzeuge abgestellt werden.
+2464;Fahrzeughalle;'Fahrzeughalle' ist ein Gebäude, in dem Fahrzeuge abgestellt, inspiziert und repariert werden.
+2465;Tiefgarage;'Tiefgarage' ist ein Bauwerk unter der Erdoberfläche, in dem Fahrzeuge abgestellt werden.
+2500;Gebäude zur Versorgung;'Gebäude zur Versorgung' ist ein Gebäude, das die Grundversorgung mit Wasser oder Energie sicherstellt.
+2501;Gebäude zur Energieversorgung;'Gebäude zur Energieversorgung' ist ein Gebäude, das die Grundversorgung mit Energie sicherstellt.
+2510;Gebäude zur Wasserversorgung;'Gebäude zur Wasserversorgung' ist ein Gebäude, das die Grundversorgung mit Wasser sicherstellt.
+2511;Wasserwerk;'Wasserwerk' ist ein Gebäude zur Aufbereitung und Bereitstellung von Trinkwasser.
+2512;Pumpstation;'Pumpstation' ist ein Gebäude an einem Rohrleitungssystem, in dem eine oder mehrere Pumpen zur Wasserversorgung eingebaut sind.
+2513;Wasserbehälter;'Wasserbehälter' ist ein Gebäude, in dem Wasser gespeichert wird, das zum Ausgleich der Differenz zwischen Wasserzuführung und -abgabe dient.
+2520;Gebäude zur Elektrizitätsversorgung;'Gebäude zur Elektrizitätsversorgung' ist ein Gebäude, in dem Elektrizität erzeugt oder übertragen wird.
+2521;Elektrizitätswerk;'Elektrizitätswerk' ist ein Gebäude, in dem Elektrizität erzeugt wird.
+2522;Umspannwerk;'Umspannwerk' ist ein Gebäude, in dem verschiedene Spannungsebenen des elektrischen Versorgungsnetzes miteinander verbunden werden.
+2523;Umformer;'Umformer' ist ein kleines Gebäude in dem ein Transformator zum Umformen von Gleichstrom in Wechselstrom oder von Gleichstrom in Gleichstrom anderer Spannung untergebracht ist.
+2527;Reaktorgebäude;'Reaktorgebäude' ist ein zentrales Gebäude eines Kernkraftwerkes, in dem aus radioaktivem Material mittels Kernspaltung Wärmeenergie erzeugt wird.
+2528;Turbinenhaus;'Turbinenhaus' ist ein Gebäude, in dem eine Kraftmaschine die Energie von strömendem Dampf, Gas, Wasser oder Wind unmittelbar in elektrische Energie umsetzt.
+2529;Kesselhaus;'Kesselhaus' ist ein Gebäude, in dem ein Dampfkessel mitsamt seiner Feuerung aufgestellt ist.
+2540;Gebäude für Fernmeldewesen;'Gebäude für Fernmeldewesen' ist ein Gebäude, in dem sich Einrichtungen zur Telekommunikation befinden.
+2560;Gebäude an unterirdischen Leitungen;'Gebäude an unterirdischen Leitungen' ist ein Gebäude, das zur Kontrolle von Versorgungsleitungen unter der Erde dient.
+2570;Gebäude zur Gasversorgung;'Gebäude zur Gasversorgung' ist ein Gebäude, in dem sich Gasanlagen befinden.
+2571;Gaswerk;'Gaswerk' ist ein Gebäude, in dem technische Gase hergestellt, gespeichert und bereitgestellt werden.
+2580;Heizwerk;'Heizwerk' ist ein Gebäude zur zentralen Erzeugung von Wärme (z.B. für Warmwasserversorgung).
+2590;Gebäude zur Versorgungsanlage;'Gebäude zur Versorgungsanlage' ist ein Gebäude, in dem sich Anlagen zur Unterstützung von Versorgungseinrichtungen befinden.
+2591;Pumpwerk (nicht für Wasserversorgung);'Pumpwerk (nicht für Wasserversorgung)' ist ein Gebäude, in dem Wasser aus einem niedriger gelegenen Gewässer in ein höher gelegenes gepumpt wird.
+2600;Gebäude zur Entsorgung;'Gebäude zur Entsorgung' ist ein Gebäude zur Beseitigung von Abwässern oder Abfällen.
+2610;Gebäude zur Abwasserbeseitigung;'Gebäude zur Abwasserbeseitigung' ist ein Gebäude zur Reinigung von verschmutztem Wasser oder zur Entsorgung von Fäkalien.
+2611;Gebäude der Kläranlage;'Gebäude der Kläranlage' ist ein Gebäude innerhalb einer Kläranlage.
+2612;Toilette;'Toilette' ist eine Einrichtung mit sanitären Vorrichtungen zur Aufnahme von Körperausscheidungen.
+2620;Gebäude zur Abfallbehandlung;'Gebäude zur Abfallbehandlung' ist ein Gebäude zur Behandlung von Abfällen.
+2621;Müllbunker;'Müllbunker' ist ein Gebäude, in dem Müll gelagert wird.
+2622;Gebäude zur Müllverbrennung;'Gebäude zur Müllverbrennung' ist ein Gebäude in dem Abfälle mit chemisch/physikalischen und biologischen oder thermischen Verfahren oder Kombination dieser Verfahren behandelt werden.
+2623;Gebäude der Abfalldeponie;'Gebäude der Abfalldeponie' ist ein Gebäude auf einer Fläche, die zur endgültigen Lagerung von Abfällen genutzt wird.
+2700;Gebäude für Land- und Forstwirtschaft;'Gebäude für Land- und Forstwirtschaft' ist ein Gebäude, das land- und forstwirtschaftlichen Zwecken dient.
+2720;Land- und forstwirtschaftliches Betriebsgebäude;'Land- und forstwirtschaftliches Betriebsgebäude' ist ein Gebäude zur Produktion von land- und forstwirtschaftlichen Gütern.
+2721;Scheune;'Scheune' ist ein Gebäude zur Lagerung landwirtschaftlicher Güter (z. B. Stroh, Heu und Getreide).
+2723;Schuppen;'Schuppen' ist ein Gebäude in einfacher Ausführung, das als Abstellplatz oder als Lagerraum zur Unterbringung von Fahrzeugen, Geräten und Materialien der Land- und Forstwirtschaft verwendet wird.
+2724;Stall;'Stall' ist ein Gebäude, in dem Tiere untergebracht sind.
+2726;Scheune und Stall;'Scheune und Stall' ist ein Gebäude, in dem landwirtschaftliche Güter gelagert werden (z.B. Stroh, Heu oder Getreide) und in dem auch Tiere untergebracht sein können.
+2727;Stall für Tiergroßhaltung;'Stall für Tiergroßhaltung' ist ein Gebäude zur Unterbringung einer großen Anzahl von Tieren.
+2728;Reithalle;'Reithalle' ist ein Gebäude zum Ausüben des Reitsports.
+2729;Wirtschaftsgebäude;'Wirtschaftsgebäude' ist ein Gebäude, das zu wirtschaftlichen Zwecken dient (z.B. Lager- oder Produktionshallen).
+2732;Almhütte;'Almhütte' ist ein einfaches, hoch in den Bergen gelegenes Gebäude, das überwiegend weidewirtschaftlichen Zwecken dient und hauptsächlich im Sommer genutzt wird.
+2735;Jagdhaus, Jagdhütte;'Jagdhaus, Jagdhütte' ist ein Gebäude, das als Unterkunft bei der Jagd dient.
+2740;Treibhaus, Gewächshaus;'Treibhaus, Gewächshaus' ist ein Gebäude mit lichtdurchlässigem Dach und Wänden, das durch künstliche Klimagestaltung der Aufzucht oder Produktion von Pflanzen dient.
+2741;Treibhaus;'Treibhaus' ist ein Gebäude mit lichtdurchlässigem Dach und Wänden, das durch künstliche Klimagestaltung der Aufzucht oder Produktion von Pflanzen dient.
+2742;Gewächshaus, verschiebbar;'Gewächshaus, verschiebbar' ist ein Gebäude mit lichtdurchlässigem Dach und Wänden, das durch künstliche Klimagestaltung der Aufzucht oder Produktion von Pflanzen dient und dabei z. B. auf Schienen hin- und her bewegt werden kann.
+3000;Gebäude für öffentliche Zwecke;'Gebäude für öffentliche Zwecke' ist ein Gebäude das der Allgemeinheit dient.
+3010;Verwaltungsgebäude;'Verwaltungsgebäude' ist ein Gebäude, in dem Verwaltungstätigkeiten durchgeführt werden.
+3011;Parlament;'Parlament' ist ein Gebäude, in dem die gesetzgebende Volksvertretung (Bundestag, Landtag) tagt.
+3012;Rathaus;'Rathaus' ist ein Gebäude, in dem der Vorstand einer Gemeinde seinen Amtssitz hat und/oder Teile der Verwaltung untergebracht sind.
+3013;Post;'Post ist ein Gebäude, in dem die Post Dienstleistungen anbietet.
+3014;Zollamt;'Zollamt' ist ein Gebäude für die Zollabfertigung an der Staatsgrenze (Grenzzollamt) oder im Inland (Binnenzollamt).
+3015;Gericht;'Gericht' ist ein Gebäude, in dem Rechtsprechung und Rechtspflege stattfinden.
+3016;Botschaft, Konsulat;'Botschaft, Konsulat' ist ein Gebäude, in dem eine ständige diplomatische Vertretung ersten Rangs eines fremden Staates oder einer internationalen Organisation untergebracht ist.
+3017;Kreisverwaltung;'Kreisverwaltung' ist ein Gebäude, in dem sich die Verwaltung eines Landkreises befindet.
+3018;Bezirksregierung;'Bezirksregierung' ist ein Gebäude, in dem sich die Regierung eines Bezirks befindet.
+3019;Finanzamt;'Finanzamt' ist ein Gebäude, in dem sich eine örtliche Behörde der Finanzverwaltung befindet.
+3020;Gebäude für Bildung und Forschung;'Gebäude für Bildung und Forschung' ist ein Gebäude, in dem durch Ausbildung Wissen und Können auf verschiedenen Gebieten vermittelt werden bzw. wo neues Wissen durch wissenschaftliche Tätigkeit gewonnen wird.
+3021;Allgemein bildende Schule;'Allgemein bildende Schule' ist ein Gebäude, in dem Kindern, Jugendlichen und Erwachsenen durch planmäßigen Unterricht Wissen vermittelt wird.
+3022;Berufsbildende Schule;'Berufsbildende Schule' ist ein Gebäude, in dem berufsbezogenes und fachgebundenes Wissen vermittelt wird.
+3023;Hochschulgebäude (Fachhochschule, Universität);'Hochschulgebäude (Fachhochschule, Universität)' ist ein Gebäude, in dem Wissenschaften gelehrt und Forschung betrieben wird.
+3024;Forschungsinstitut;'Forschungsinstitut' ist ein Gebäude, in dem Forschung betrieben wird.
+3030;Gebäude für kulturelle Zwecke;'Gebäude für kulturelle Zwecke' ist ein Gebäude, in dem kulturelle Ereignisse stattfinden sowie ein Gebäude von kulturhistorischer Bedeutung.
+3031;Schloss;'Schloss' ist ein Gebäude, das als repräsentativer Wohnsitz vor allem des Adels dient oder diente.
+3032;Theater, Oper;'Theater, Oper' ist ein Gebäude, in dem Bühnenstücke aufgeführt werden.
+3033;Konzertgebäude;'Konzertgebäude' ist ein Gebäude, in dem Musikaufführungen stattfinden.
+3034;Museum;'Museum' ist ein Gebäude, in dem Sammlungen von (historischen) Objekten oder Reproduktionen davon ausgestellt werden.
+3035;Rundfunk, Fernsehen;'Rundfunk-, Fernsehen' ist ein Gebäude, in dem Radio- und Fernsehprogramme produziert und gesendet werden.
+3036;Veranstaltungsgebäude;'Veranstaltungsgebäude' ist ein Gebäude, das hauptsächlich für kulturelle Zwecke wie z. B. Aufführungen, Ausstellungen, Konzerte genutzt wird.
+3037;Bibliothek, Bücherei;'Bibliothek, Bücherei' ist ein Gebäude, in dem Bücher und Zeitschriften gesammelt, aufbewahrt und ausgeliehen werden.
+3038;Burg, Festung;'Burg, Festung' ist ein Gebäude innerhalb einer befestigten Anlage.
+3040;Gebäude für religiöse Zwecke;'Gebäude für religiöse Zwecke' ist ein Gebäude, das bei Gottesdiensten oder sonstigen religiösen Veranstaltungen als Versammlungsort dient.
+3041;Kirche;'Kirche' ist ein Gebäude, in dem sich Christen zu Gottesdiensten versammeln.
+3042;Synagoge;'Synagoge' ist ein Gebäude, in dem sich Personen jüdischen Glaubens zu Gottesdiensten, zum Schriftstudium und zur Unterweisung versammeln.
+3043;Kapelle;'Kapelle' ist ein kleines Gebäude (Gebets-, Tauf-, Grabkapelle) für (christliche) gottesdienstliche Zwecke.
+3044;Gemeindehaus;'Gemeindehaus' ist ein Gebäude, das Personen einer bestimmten Glaubensgemeinschaft zu verschiedenen Zwecken dient.
+3045;Gotteshaus;'Gotteshaus' ist ein Gebäude, in dem Gläubige einer nichtchristlichen Religionsgemeinschaft religiöse Handlungen vollziehen.
+3046;Moschee;'Moschee' ist ein Gebäude, in dem sich Personen muslimischen Glaubens zum Gebet versammeln und das als sozialer Treffpunkt dient.
+3047;Tempel;'Tempel' ist ein Gebäude, das Personen in der Ausübung ihrer Religion (z. B. Buddhisten, Hinduisten) als Versammlungsort dient.
+3048;Kloster;'Kloster' ist ein Gebäude, in dem Angehörige eines Ordens in einer auf die Ausübung ihrer Religion konzentrierten Lebensweise zusammenleben.
+3050;Gebäude für Gesundheitswesen;'Gebäude für Gesundheitswesen' ist ein Gebäude, das der ambulanten oder stationären Behandlung und Pflege von Patienten dient.
+3051;Krankenhaus;'Krankenhaus' ist ein Gebäude, in dem Kranke behandelt und/oder gepflegt werden.
+3052;Heilanstalt, Pflegeanstalt, Pflegestation;'Heilanstalt, Pflegeanstalt, Pflegestation' ist ein Gebäude, das einer länger andauernden Behandlung von Patienten dient.
+3053;Ärztehaus, Poliklinik;'Ärztehaus, Poliklinik' ist ein Gebäude, in dem mehrere Ärzte unterschiedlicher Fachrichtung Kranke ambulant behandeln und versorgen.
+3054;Rettungswache;'Rettungswache' ist ein Gebäude des Rettungsdienstes, in dem sich die Besatzungen der Rettungsdienstfahrzeuge in ihrer einsatzfreien Zeit aufhalten. Hier sind auch die Fahrzeuge und Geräte untergebracht.
+3060;Gebäude für soziale Zwecke;'Gebäude für soziale Zwecke' ist ein Gebäude, in dem ältere Menschen, Obdachlose, Jugendliche oder Kinder betreut werden.
+3061;Jugendfreizeitheim;'Jugendfreizeitheim' ist ein Gebäude der offenen Kinder- und Jugendarbeit.
+3062;Freizeit-, Vereinsheim, Dorfgemeinschafts-, Bürgerhaus;'Freizeit-, Vereinsheim, Dorfgemeinschafts-, Bürgerhaus' ist ein Gebäude zur gemeinschaftlichen Nutzung unterschiedlicher sozialer Gruppen.
+3063;Seniorenfreizeitstätte;'Seniorenfreizeitstätte' ist ein Gebäude zur Ausübung seniorengerechter Freizeitaktivitäten.
+3064;Obdachlosenheim;'Obdachlosenheim' ist ein Gebäude, in dem Obdachlose untergebracht sind und betreut werden.
+3065;Kinderkrippe, Kindergarten, Kindertagesstätte;'Kinderkrippe, Kindergarten, Kindertagesstätte' ist ein Gebäude, in dem Kinder im Vorschulalter betreut werden.
+3066;Asylbewerberheim;'Asylbewerberheim' ist ein Gebäude, in dem Asylbewerber ohne Aufenthaltsgenehmigung für Deutschland eine gewisse Zeit untergebracht sind.
+3070;Gebäude für Sicherheit und Ordnung;'Gebäude für Sicherheit und Ordnung' ist ein Gebäude, das für Personen und Gegenstände dient, die zur Verhütung oder Bekämpfung von Rechtsverletzungen und zum Katastrophenschutz eingesetzt werden, oder zur Unterbringung von Strafgefangenen.
+3071;Polizei;'Polizei' ist ein Gebäude für Polizeibedienstete, die in einem bestimmten Gebiet für Sicherheit und Ordnung zuständig sind.
+3072;Feuerwehr;'Feuerwehr' ist ein Gebäude der Feuerwehr, in dem Personen und Geräte zur Brandbekämpfung sowie zu anderen Hilfeleistungen untergebracht sind.
+3073;Kaserne;'Kaserne' ist ein Gebäude zur ortsfesten Unterbringung von Angehörigen der Bundeswehr und der Polizei sowie deren Ausrüstung.
+3074;Schutzbunker;'Schutzbunker' ist ein Gebäude zum Schutz der Zivilbevölkerung vor militärischen Angriffen.
+3075;Justizvollzugsanstalt;'Justizvollzugsanstalt' ist ein Gebäude zur Unterbringung von Untersuchungshäftlingen und Strafgefangenen.
+3080;Friedhofsgebäude;'Friedhofsgebäude' ist ein Gebäude, das zur Aufrechterhaltung des Friedhofbetriebes dient (z. B. Verwaltung, Leichenhalle, Krematorium).
+3081;Trauerhalle;'Trauerhalle' ist ein Gebäude, welches für Bestattungszeremonien bestimmt ist und zur kurzzeitigen Aufbewahrung von Toten dienen kann.
+3082;Krematorium;'Krematorium' ist ein Gebäude, in dem Feuerbestattungen durchgeführt werden.
+3090;Empfangsgebäude;'Empfangsgebäude' ist ein Gebäude mit Wartesaal, Fahrkarten- und Gepäckschalter zur Abwicklung des Straßen-, Schienen-, Seilbahn-, Luft- und Schiffsverkehrs.
+3091;Bahnhofsgebäude;'Bahnhofsgebäude' ist ein Gebäude u. a. mit Wartebereich und Fahrkartenausgabe zur Abwicklung des Bahnverkehrs.
+3092;Flughafengebäude;'Flughafengebäude' ist ein Gebäude u. a. mit Wartebereich, Flugticket- und Gepäckschalter zur Abwicklung des Flugverkehrs.
+3094;Gebäude zum U-Bahnhof;'Gebäude zum U-Bahnhof' ist ein Gebäude u. a. mit Wartebereich und Fahrkartenausgabe zur Abwicklung des U-Bahn-Verkehrs.
+3095;Gebäude zum S-Bahnhof;'Gebäude zum S-Bahnhof' ist ein Gebäude u. a. mit Wartebereich und Fahrkartenausgabe zur Abwicklung des S-Bahn-Verkehrs.
+3097;Gebäude zum Busbahnhof;'Gebäude zum Busbahnhof' ist ein Gebäude auf dem Busbahnhof, das zur Abwicklung des Busverkehrs dient.
+3098;Empfangsgebäude Schifffahrt;'Empfangsgebäude Schifffahrt' ist ein Gebäude u. a. mit Wartebereich, Fahrticket- und Gepäckschalter zur Abwicklung des Schiffsverkehrs.
+3100;Gebäude für öffentliche Zwecke mit Wohnen;'Gebäude für öffentliche Zwecke mit Wohnen' ist ein Gebäude, das der Allgemeinheit dient und auch zum Wohnen genutzt wird.
+3200;Gebäude für Erholungszwecke;'Gebäude für Erholungszwecke' ist ein Gebäude zur Freizeitgestaltung mit dem Ziel der Erhaltung und Wiederherstellung der Leistungsfähigkeit des Menschen.
+3210;Gebäude für Sportzwecke;'Gebäude für Sportzwecke' ist ein Gebäudes, in dem verschiedene Sportarten ausgeübt werden.
+3211;Sport-, Turnhalle;'Sport-, Turnhalle' ist ein Gebäude, das für den Turnunterricht und für sportliche Betätigungen in der Freizeit errichtet und dementsprechend ausgestattet ist.
+3212;Gebäude zum Sportplatz;'Gebäude zum Sportplatz' ist ein Gebäude auf einer Fläche, die zur sportlichen Betätigung genutzt wird.
+3220;Badegebäude;'Badegebäude' ist ein Gebäude, in dem sich Anlagen zur Erholung und sportlichen Betätigung im Wasser befinden.
+3221;Hallenbad;'Hallenbad' ist ein Gebäude mit Schwimmbecken und zugehörigen Einrichtungen (z. B. Umkleidekabinen).
+3222;Gebäude im Freibad;'Gebäude im Freibad' ist ein Gebäude, das sich in einer Außenanlage mit Schwimmbecken und zugehörigen Einrichtungen (z. B. Umkleidekabinen) befindet.
+3230;Gebäude im Stadion;'Gebäude im Stadion' ist ein Gebäude, das sich in einer großen Anlage für sportliche Aktivitäten und Wettkämpfe befindet.
+3240;Gebäude für Kurbetrieb;'Gebäude für Kurbetrieb' ist ein Gebäude, in dem Maßnahmen zur Erholung oder Rehabilitation durchgeführt werden.
+3241;Badegebäude für medizinische Zwecke;'Badegebäude für medizinische Zwecke' ist ein Gebäude, in dem Bäder zur therapeutischen Anwendung durchgeführt werden.
+3242;Sanatorium;'Sanatorium' ist ein Gebäude mit zugehörigen Einrichtungen, das klimagünstig gelegen ist, unter fachärztlicher Leitung steht und zur Behandlung chronisch Kranker und Genesender bestimmt ist, für die kein Krankenhausaufenthalt in Frage kommt.
+3260;Gebäude im Zoo;'Gebäude im Zoo' ist ein Gebäude, das sich in einer parkartigen Anlage zur Haltung und öffentlichen Zurschaustellung verschiedener Tierarten befindet.
+3261;Empfangsgebäude des Zoos;'Empfangsgebäude des Zoos' ist ein Gebäude, das sich im Eingangsbereich des Zoos befindet u. a. mit Wartebereich und Einlasskontrolle.
+3262;Aquarium, Terrarium, Voliere;'Aquarium, Terrarium, Voliere' ist ein Gebäude, in dem Fische und Wasserpflanzen, Reptilien und Amphibien oder Vögel gehalten und gezüchtet werden.
+3263;Tierschauhaus;'Tierschauhaus' ist ein Gebäude, in dem Tiere untergebracht sind und Besuchern gezeigt werden.
+3264;Stall im Zoo;'Stall im Zoo' ist ein Gebäude, das meist zur separaten Unterbringung der Zootiere dient.
+3270;Gebäude im botanischen Garten;'Gebäude im botanischen Garten' ist ein Gebäude, das sich in einer parkartigen Anlage mit thematisch geordneter Anpflanzung befindet.
+3271;Empfangsgebäude des botanischen Gartens;'Empfangsgebäude des botanischen Gartens' ist ein Gebäude, das sich im Eingangsbereich des botanischen Gartens befindet u. a. mit Wartebereich und Einlasskontrolle.
+3272;Gewächshaus (Botanik);'Gewächshaus (Botanik)' ist ein Gebäude, welches das geschützte und kontrollierte Kultivieren von Pflanzen ermöglicht.
+3273;Pflanzenschauhaus;'Pflanzenschauhaus' ist ein Gebäude, in dem Pflanzen unterschiedlicher Klima- oder Vegetationszonen ausgestellt sind und Besuchern gezeigt werden.
+3280;Gebäude für andere Erholungseinrichtung;'Gebäude für andere Erholungseinrichtung' ist ein Gebäude, das einer anderen Art der Erholung dient.
+3281;Schutzhütte;'Schutzhütte' ist ein Gebäude zum Schutz vor Unwetter.
+3290;Touristisches Informationszentrum;'Touristisches Informationszentrum' ist eine Auskunftsstelle für Touristen.
+9998;Nach Quellenlage nicht zu spezifizieren;'Nach Quellenlage nicht zu spezifizieren' bedeutet, dass keine Aussage über die Werteart gemacht werden kann.
