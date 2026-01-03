@@ -1,0 +1,119 @@
+import React, { useState } from 'react';
+import { Download, List } from 'lucide-react';
+import BuildingCard from './BuildingCard';
+import QueryExplanation from './QueryExplanation';
+import FilterBar from './FilterBar';
+import Select from '../UI/Select';
+import EmptyState from '../UI/EmptyState';
+import Loading from '../UI/Loading';
+
+// right panel with building list, filters, export button
+
+const ResultsSidebar = ({
+    buildings,
+    selectedIds,
+    onToggleSelection,
+    onSelectAll,
+    query,
+    loading = false
+}) => {
+    const [sortBy, setSortBy] = useState('distance');
+    const [activeFilters, setActiveFilters] = useState([]);
+
+    const sortOptions = [
+        { value: 'distance', label: 'Sort by Distance' },
+        { value: 'area', label: 'Sort by Area' },
+        { value: 'name', label: 'Sort by Name' },
+        { value: 'floors', label: 'Sort by Floors' },
+    ];
+
+    const handleExport = () => {
+        const selectedBuildings = buildings.filter(b => selectedIds.includes(b.id));
+        console.log('Exporting:', selectedBuildings);
+        // Implement export logic
+    };
+
+    const handleRemoveFilter = (filter) => {
+        setActiveFilters(activeFilters.filter(f => f !== filter));
+    };
+
+    const handleClearAllFilters = () => {
+        setActiveFilters([]);
+    };
+
+    return (
+        <div className="w-96 bg-gray-900 flex flex-col border-l border-gray-800">
+            {/* Results Header */}
+            <div className="p-4 border-b border-gray-800">
+                <div className="flex items-center justify-between mb-3">
+                    <h2 className="font-semibold">Results</h2>
+                    <span className="text-sm text-gray-400">{buildings.length}</span>
+                </div>
+
+                <div className="flex items-center gap-2 mb-3">
+                    <Select
+                        value={sortBy}
+                        onChange={(e) => setSortBy(e.target.value)}
+                        options={sortOptions}
+                        className="flex-1"
+                    />
+                    <button className="bg-gray-800 p-2 rounded hover:bg-gray-700">
+                        <List className="w-4 h-4" />
+                    </button>
+                </div>
+
+                <button
+                    onClick={onSelectAll}
+                    className="w-full bg-gray-800 py-2 rounded text-sm hover:bg-gray-700"
+                >
+                    Select all
+                </button>
+
+                <button
+                    onClick={handleExport}
+                    disabled={selectedIds.length === 0}
+                    className="w-full bg-blue-600 py-2 rounded text-sm hover:bg-blue-700 mt-2 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    <Download className="w-4 h-4" />
+                    Export ({selectedIds.length})
+                </button>
+            </div>
+
+            {/* Query Explanation, this needs changing because it shows up when loading page, not wanted*/}
+            <QueryExplanation query={query} />
+
+            {/* Filter Bar */}
+            <FilterBar
+                activeFilters={activeFilters}
+                onRemoveFilter={handleRemoveFilter}
+                onClearAll={handleClearAllFilters}
+            />
+
+            {/* Building List */}
+            <div className="flex-1 overflow-y-auto">
+                {loading ? (
+                    <div className="flex items-center justify-center h-full">
+                        <Loading text="Loading buildings..." />
+                    </div>
+                ) : buildings.length === 0 ? (
+                    <EmptyState
+                        title="No buildings found"
+                        description="Try adjusting your search query"
+                    />
+                ) : (
+                    // this is for building information from BuildingCard
+                    buildings.map((building) => (
+                        <BuildingCard
+                            key={building.id}
+                            building={building}
+                            isSelected={selectedIds.includes(building.id)}
+                            onToggle={onToggleSelection}
+                        />
+                    ))
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default ResultsSidebar;
