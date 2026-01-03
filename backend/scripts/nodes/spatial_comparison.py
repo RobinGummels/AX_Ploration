@@ -53,9 +53,9 @@ def spatial_comparison(state: AgentState) -> Dict[str, Any]:
                     }
         
         # Calculate other statistics from numeric fields
-        numeric_fields = ["height", "area", "floors_above", "floors_below"]
+        numeric_fields = ["floors_above", "house_number", "post_code", "HAS_FUNCTION"]
         for field in numeric_fields:
-            values = [r.get(field) for r in results if r.get(field) is not None]
+            values = [r.get(field) for r in results if r.get(field) is not None and isinstance(r.get(field), (int, float))]
             if values:
                 spatial_analysis["statistics"][field] = {
                     "count": len(values),

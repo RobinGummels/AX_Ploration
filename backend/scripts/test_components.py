@@ -149,9 +149,9 @@ def test_query_interpretation():
         
         # Test different query types
         test_queries = [
-            ("Zeige mir alle Gebäude in Berlin-Mitte", "district"),
+            ("Zeige mir alle Gebäude in Spandau", "district"),
             ("Finde Gebäude im Umkreis von 500m um den Hauptbahnhof", "nearby"),
-            ("Wie viele Wohngebäude gibt es in NRW?", "statistics"),
+            ("Wie viele Schulgebäude gibt es in Pankow?", "statistics"),
         ]
         
         for query, expected_type in test_queries:
@@ -192,11 +192,11 @@ def test_cypher_generation():
         from .models import AgentState
         
         test_state: AgentState = {
-            "query": "Zeige mir alle Wohngebäude in Münster",
-            "attributes": ["function", "height"],
+            "query": "Zeige mir alle Wohngebäude in Spandau",
+            "attributes": ["HAS_FUNCTION", "floors_above"],
             "needs_building_function": True,
             "building_functions": ["1010"],
-            "building_function_descriptions": ["Wohngebäude"],
+            "building_function_descriptions": ["Wohnhaus"],
             "query_type": "district",
             "cypher_query": "",
             "results": [],

@@ -78,10 +78,8 @@ def generate_answer(state: AgentState) -> Dict[str, Any]:
         
         if spatial_comparison and spatial_comparison.get("statistics"):
             stats = spatial_comparison["statistics"]
-            if "height" in stats:
-                basic_answer += f"\nDurchschnittliche Höhe: {stats['height']['avg']:.1f}m"
-            if "area" in stats:
-                basic_answer += f"\nDurchschnittliche Fläche: {stats['area']['avg']:.1f}m²"
+            if "floors_above" in stats:
+                basic_answer += f"\nDurchschnittliche Stockwerke: {stats['floors_above']['avg']:.1f}"
         
         return {
             "final_answer": basic_answer,

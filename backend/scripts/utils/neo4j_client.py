@@ -58,7 +58,7 @@ class Neo4jClient:
     def get_building_functions(self) -> List[Dict[str, Any]]:
         """Retrieve all building functions from the database."""
         query = """
-        MATCH (f:Function)
+        MATCH (f:Functions)
         RETURN f.code AS code, 
                f.name AS name,
                f.description AS description

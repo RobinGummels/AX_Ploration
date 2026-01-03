@@ -9,16 +9,14 @@ Deine Aufgabe ist es, aus einer Benutzeranfrage zu identifizieren:
 2. Wird eine spezifische Gebäudefunktion benötigt?
 
 Mögliche Gebäudeattribute:
-- has_function: Verweis auf eine Gebäudefunktion (Wohngebäude, Büro, Industriegebäude, etc.)
-- in_district: Verweis auf ein Stadtteil/Bezirk
-- area: Grundfläche
+- HAS_FUNCTION: Verweis auf eine Gebäudefunktion (Wohngebäude, Büro, Industriegebäude, etc.)
+- IN_DISTRICT: Verweis auf ein Stadtteil/Bezirk
 - floors_above: Anzahl oberirdische Stockwerke
-- floors_below: Anzahl unterirdische Stockwerke
 - house_number: Hausnummer
 - street_name: Straßenname
 - post_code: Postleitzahl
-- name: Gebäudename
 - centroid: Mittelpunkt-Koordinaten
+- geometry_geojson: GeoJSON Geometrie
 
 Antworte im JSON-Format:
 {
@@ -56,19 +54,27 @@ Gebäudefunktionen: {building_functions}"""
 Du erstellst Cypher-Queries für eine Gebäudedatenbank mit folgendem Schema:
 
 Nodes:
-- (:Building {id, area, centroid, floors_above, floors_below, house_number, street_name, name, post_code, uuid})
-- (:District {id, centroid, geometry, name})
-- (:Function {id, code, description, name})
+- (:Buildings {id, centroid, floors_above, house_number, street_name, post_code, geometry_geojson, IN_DISTRICT, HAS_FUNCTION})
+- (:Districts {Gemeinde_name, Gemeinde_schluessel, Land_name, WKT, centroid, gml_id, Schluessel_gesamt})
+- (:Functions {code, name, description, description_embedding_small, description_embedding_large})
 
 Relationships:
-- (Building)-[:IN_DISTRICT]->(District)
-- (Building)-[:HAS_FUNCTION]->(Function)
+- (Buildings)-[:IN_DISTRICT]->(Districts)
+- (Buildings)-[:HAS_FUNCTION]->(Functions)
+- (Functions)-[:HAS_SUBFUNCTION]->(Functions)
 
 Wichtig:
 - Nutze immer MATCH statt optionale Patterns wenn möglich
+- Label heißen Buildings, Districts, Functions (Plural!)
+- Properties: floors_above, house_number, street_name, post_code, geometry_geojson (mit Unterstrich!)
+- District-Name: Gemeinde_name (nicht name!)
+- Function-Code: code (Integer), Function-Name: name
+- Nutze Relationships für Verknüpfungen: -[:IN_DISTRICT]->, -[:HAS_FUNCTION]->
 - Limitiere Ergebnisse auf maximal 100 wenn nicht anders angegeben
-- Gib alle relevante Properties zurück
-- Die Cyperquery darf nur Gebäude zurückgeben, die eine Relationship zum vom User gesuchten District haben
+- Gib alle relevanten Properties zurück
+- Die Cypherquery darf nur Gebäude zurückgeben, die eine Relationship zum vom User gesuchten District haben
+- Buildings haben auch Properties IN_DISTRICT (String) und HAS_FUNCTION (Integer) zusätzlich zu Relationships!
+- Centroid Format bei Buildings: "Point (x y)" in EPSG:25833, bei Districts: "Point (lon lat)" in WGS84
 
 Antworte NUR mit der Cypher-Query, ohne Erklärungen.""",
         
@@ -84,25 +90,22 @@ Gebäudefunktionen (Codes): {building_functions}"""
 Du erstellst Cypher-Queries für eine Gebäudedatenbank mit folgendem Schema:
 
 Nodes:
-- (:Building {id, area, centroid, floors_above, floors_below, house_number, street_name, name, post_code, uuid})
-- (:District {id, centroid, geometry, name})
-- (:Function {id, code, description, name})
+- (:Buildings {id, centroid, floors_above, house_number, street_name, post_code, geometry_geojson, IN_DISTRICT, HAS_FUNCTION})
+- (:Districts {Gemeinde_name, Gemeinde_schluessel, Land_name, WKT, centroid, gml_id, Schluessel_gesamt})
+- (:Functions {code, name, description, description_embedding_small, description_embedding_large})
 
 Relationships:
-- (Building)-[:IN_DISTRICT]->(District)
-- (Building)-[:HAS_FUNCTION]->(Function)
+- (Buildings)-[:IN_DISTRICT]->(Districts)
+- (Buildings)-[:HAS_FUNCTION]->(Functions)
+- (Functions)-[:HAS_SUBFUNCTION]->(Functions)
 
 Wichtig:
-- Nutze immer MATCH statt optionale Patterns wenn möglich
-- Limitiere Ergebnisse auf maximal 100 wenn nicht anders angegeben
-- Gib alle relevante Properties zurück
-- Nutze point() und distance() Funktionen für räumliche Suchen
-- Koordinaten sind in WGS84 (EPSG:4326)
+- Label heißen Buildings, Districts, Functions (Plural!)
+- Buildings.centroid ist im Format "Point (x y)" in EPSG:25833 (nicht WGS84!)
+- Für räumliche Suchen: Parse centroid String und konvertiere zu Point
+- Limitiere Ergebnisse auf maximal 100
 
-Beispiel für Umkreissuche:
-MATCH (b:Building)
-WHERE point.distance(b.centroid, point({longitude: $lon, latitude: $lat})) < $radius
-RETURN b
+HINWEIS: Räumliche Suchen sind komplex wegen EPSG:25833 Format.
 
 Antworte NUR mit der Cypher-Query.""",
         
@@ -117,22 +120,20 @@ Gebäudefunktionen: {building_functions}"""
       
 Du erstellst Cypher-Queries für eine Gebäudedatenbank mit folgendem Schema:  
 Nodes:
-- (:Building {id, area, centroid, floors_above, floors_below, house_number, street_name, name, post_code, uuid})
-- (:District {id, centroid, geometry, name})
-- (:Function {id, code, description, name})
+- (:Buildings {id, centroid, floors_above, house_number, street_name, post_code, geometry_geojson, IN_DISTRICT, HAS_FUNCTION})
+- (:Districts {Gemeinde_name, Gemeinde_schluessel, Land_name, WKT, centroid, gml_id, Schluessel_gesamt})
+- (:Functions {code, name, description, description_embedding_small, description_embedding_large})
 
 Relationships:
-- (Building)-[:IN_DISTRICT]->(District)
-- (Building)-[:HAS_FUNCTION]->(Function)
+- (Buildings)-[:IN_DISTRICT]->(Districts)
+- (Buildings)-[:HAS_FUNCTION]->(Functions)
+- (Functions)-[:HAS_SUBFUNCTION]->(Functions)
 
 Wichtig:
-- Nutze immer MATCH statt optionale Patterns wenn möglich
-- Limitiere Ergebnisse auf maximal 100 wenn nicht anders angegeben
-- Gib alle relevante Properties zurück
-
-Für Polygon-Suchen nutze:
-- point.withinBBox() für Bounding Box
-- Oder verwende direkt die Geometrie, welche vom User in der Query angegeben wurde
+- Label heißen Buildings, Districts, Functions (Plural!)
+- GIb alle relevanten Properties zurück
+- Limitiere Ergebnisse auf maximal 100
+- geometry_geojson enthält MULTIPOLYGON String im EPSG:25833 Format
 
 Antworte NUR mit der Cypher-Query.""",
         
@@ -147,13 +148,14 @@ Gebäudefunktionen: {building_functions}"""
 
 Du erstellst Cypher-Queries für eine Gebäudedatenbank mit folgendem Schema:  
 Nodes:
-- (:Building {id, area, centroid, floors_above, floors_below, house_number, street_name, name, post_code, uuid})
-- (:District {id, centroid, geometry, name})
-- (:Function {id, code, description, name})
+- (:Buildings {id, centroid, floors_above, house_number, street_name, post_code, geometry_geojson, IN_DISTRICT, HAS_FUNCTION})
+- (:Districts {Gemeinde_name, Gemeinde_schluessel, Land_name, WKT, centroid, gml_id, Schluessel_gesamt})
+- (:Functions {code, name, description, description_embedding_small, description_embedding_large})
 
 Relationships:
-- (Building)-[:IN_DISTRICT]->(District)
-- (Building)-[:HAS_FUNCTION]->(Function)
+- (Buildings)-[:IN_DISTRICT]->(Districts)
+- (Buildings)-[:HAS_FUNCTION]->(Functions)
+- (Functions)-[:HAS_SUBFUNCTION]->(Functions)
 
 Wichtig ist, dass du je nach Anfrage passende Aggregationsfunktionen nutzt:
 - count() für Anzahl
