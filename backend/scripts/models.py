@@ -12,8 +12,9 @@ class AgentState(TypedDict):
     needs_building_function: bool                   # Whether building function lookup is needed
     
     # Building Function Search
-    building_functions: List[str]                   # Found building function codes (e.g., "1010", "2000")
-    building_function_descriptions: List[str]       # Human-readable descriptions
+    building_functions: List[int]                   # Found building function codes (e.g., 1010, 2000)
+    building_function_names: List[str]              # Function names (e.g., "Wohnhaus", "Wohngebäude")
+    building_function_descriptions: List[str]       # Full descriptions
     
     # Query Interpretation
     query_type: str                                 # "district" | "nearby" | "custom_area" | "statistics"
@@ -39,7 +40,8 @@ class AgentState(TypedDict):
 
 class BuildingFunction(TypedDict):
     """Represents a building function from the database."""
-    code: str
+    code: int
+    name: str
     description: str
-    parent_code: Optional[str]
-    embedding: Optional[List[float]]
+    embedding_small: Optional[List[float]]
+    embedding_large: Optional[List[float]]

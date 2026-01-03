@@ -46,6 +46,13 @@ def generate_answer(state: AgentState) -> Dict[str, Any]:
     results_to_show = results[:20]
     results_text = json.dumps(results_to_show, ensure_ascii=False, indent=2)
     
+    # Add building function context if used
+    building_functions = state.get("building_functions", [])
+    building_function_names = state.get("building_function_names", [])
+    if building_functions and building_function_names and len(building_functions) == len(building_function_names):
+        functions_text = ", ".join([f"{name} (Code: {code})" for code, name in zip(building_functions, building_function_names)])
+        results_text = f"Gesuchte Gebäudefunktionen: {functions_text}\n\n" + results_text
+    
     # Add spatial analysis if available
     if spatial_comparison:
         results_text += f"\n\nRäumliche Analyse:\n{json.dumps(spatial_comparison, ensure_ascii=False, indent=2)}"

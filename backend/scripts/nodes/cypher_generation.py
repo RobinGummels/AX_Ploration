@@ -21,6 +21,15 @@ def _generate_cypher(state: AgentState, prompt_key: str) -> Dict[str, Any]:
     query = state["query"]
     attributes = state.get("attributes", [])
     building_functions = state.get("building_functions", [])
+    building_function_names = state.get("building_function_names", [])
+    
+    # Create a combined representation of functions (code + name) for better prompt context
+    if building_functions and building_function_names and len(building_functions) == len(building_function_names):
+        functions_text = ", ".join([f"{code} ({name})" for code, name in zip(building_functions, building_function_names)])
+    elif building_functions:
+        functions_text = ", ".join([str(code) for code in building_functions])
+    else:
+        functions_text = "[]"
     
     prompt = PROMPTS[prompt_key]
     
@@ -29,7 +38,7 @@ def _generate_cypher(state: AgentState, prompt_key: str) -> Dict[str, Any]:
         {"role": "user", "content": prompt["user"].format(
             query=query,
             attributes=attributes,
-            building_functions=building_functions
+            building_functions=functions_text
         )}
     ]
     

@@ -70,13 +70,24 @@ class Neo4jClient:
         self, 
         embedding: List[float], 
         top_k: int = 5,
-        index_name: str = "building_function_embeddings"
+        use_large_model: bool = False
     ) -> List[Dict[str, Any]]:
-        """Perform similarity search on building function embeddings."""
-        query = """
+        """Perform similarity search on building function embeddings.
+        
+        Args:
+            embedding: Query embedding vector
+            top_k: Number of results to return
+            use_large_model: If True, use description_embedding_large, else description_embedding_small
+        """
+        # Determine which embedding property to use based on model
+        embedding_property = "description_embedding_large" if use_large_model else "description_embedding_small"
+        index_name = "function_embeddings_large" if use_large_model else "function_embeddings_small"
+        
+        query = f"""
         CALL db.index.vector.queryNodes($index_name, $top_k, $embedding)
         YIELD node, score
-        RETURN node.code AS code, 
+        RETURN node.code AS code,
+               node.name AS name,
                node.description AS description,
                score
         ORDER BY score DESC
