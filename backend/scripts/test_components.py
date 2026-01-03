@@ -230,7 +230,7 @@ def test_graph_compilation():
         
         # Check nodes
         workflow = create_workflow()
-        print(f"✓ Workflow created with nodes")
+        print("✓ Workflow created with nodes")
         
         # Compile
         compiled = workflow.compile()

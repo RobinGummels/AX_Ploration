@@ -122,7 +122,7 @@ def update_embeddings(
             if skip_existing:
                 has_embeddings = session.execute_read(_check_existing, code)
                 if has_embeddings:
-                    print(f"  ✓ Embeddings already exist, skipping")
+                    print("  ✓ Embeddings already exist, skipping")
                     skipped += 1
                     continue
             
@@ -131,27 +131,27 @@ def update_embeddings(
             embedding_small = create_embedding(openai_client, description, small_model)
             
             if not embedding_small:
-                print(f"  ✗ Failed to create small embedding")
+                print("  ✗ Failed to create small embedding")
                 failed.append((code, name, "small embedding failed"))
                 continue
             
-            print(f"  Creating large embedding ({large_model})...")
+            print("  Creating large embedding ({large_model})...")
             embedding_large = create_embedding(openai_client, description, large_model)
             
             if not embedding_large:
-                print(f"  ✗ Failed to create large embedding")
+                print("  ✗ Failed to create large embedding")
                 failed.append((code, name, "large embedding failed"))
                 continue
             
             # Store embeddings
-            print(f"  Storing embeddings in Neo4j...")
+            print("  Storing embeddings in Neo4j...")
             result = session.execute_write(_update, code, embedding_small, embedding_large)
             
             if result:
-                print(f"  ✓ Successfully updated node")
+                print("  ✓ Successfully updated node")
                 updated += 1
             else:
-                print(f"  ✗ Failed to update node in database")
+                print("  ✗ Failed to update node in database")
                 failed.append((code, name, "database update failed"))
             
             # Small delay to respect rate limits
@@ -204,7 +204,7 @@ def main():
             return 0
         
         # Create embeddings
-        print(f"Creating embeddings using:")
+        print("Creating embeddings using:")
         print(f"  Small model: {args.small_model}")
         print(f"  Large model: {args.large_model}")
         print(f"  Skip existing: {not args.force}")
