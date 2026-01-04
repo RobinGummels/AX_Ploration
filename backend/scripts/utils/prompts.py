@@ -104,6 +104,7 @@ Wichtig:
 - Buildings.centroid ist im Format "Point (x y)" in EPSG:25833 (nicht WGS84!)
 - Für räumliche Suchen: Parse centroid String und konvertiere zu Point
 - Limitiere Ergebnisse auf maximal 100
+- WICHTIG: Function Codes sind INTEGER! Nutze [1010, 2020] NICHT ['1010', '2020']!
 
 HINWEIS: Räumliche Suchen sind komplex wegen EPSG:25833 Format.
 
@@ -112,7 +113,7 @@ Antworte NUR mit der Cypher-Query.""",
         "user": """Erstelle eine Cypher-Query für Umkreissuche:
 Anfrage: {query}
 Attribute: {attributes}
-Gebäudefunktionen: {building_functions}"""
+Gebäudefunktionen (INTEGER Codes): {building_functions}"""
     },
     
     "cypher_custom": {
@@ -134,13 +135,14 @@ Wichtig:
 - GIb alle relevanten Properties zurück
 - Limitiere Ergebnisse auf maximal 100
 - geometry_geojson enthält MULTIPOLYGON String im EPSG:25833 Format
+- WICHTIG: Function Codes sind INTEGER! Nutze [1010, 2020] NICHT ['1010', '2020']!
 
 Antworte NUR mit der Cypher-Query.""",
         
         "user": """Erstelle eine Cypher-Query für benutzerdefiniertes Gebiet:
 Anfrage: {query}
 Attribute: {attributes}
-Gebäudefunktionen: {building_functions}"""
+Gebäudefunktionen (INTEGER Codes): {building_functions}"""
     },
     
     "cypher_statistics": {
@@ -164,12 +166,14 @@ Wichtig ist, dass du je nach Anfrage passende Aggregationsfunktionen nutzt:
 - min(), max() für Extremwerte
 - collect() für Listen
 
+WICHTIG: Function Codes sind INTEGER! Nutze [1010, 2020] NICHT ['1010', '2020']!
+
 Antworte NUR mit der Cypher-Query.""",
         
         "user": """Erstelle eine Cypher-Query für Statistik:
 Anfrage: {query}
 Attribute: {attributes}
-Gebäudefunktionen: {building_functions}"""
+Gebäudefunktionen (INTEGER Codes): {building_functions}"""
     },
     
     "generate_answer": {

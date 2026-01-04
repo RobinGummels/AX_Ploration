@@ -69,3 +69,71 @@ def embedding_search(state: AgentState) -> Dict[str, Any]:
     # No results from vector search, try fallback
     return _fallback_function_search(query)
 
+    # TODO: Remove temporary fallback once vector index is reliably set up
+def _fallback_function_search(query: str) -> Dict[str, Any]:
+    """
+    Fallback: Search building functions using text matching.
+    
+    Used when vector index is not available.
+    Returns codes, names, and descriptions.
+    """
+    try:
+        # Get all building functions from database
+        all_functions = neo4j_client.get_building_functions()
+        
+        if not all_functions:
+            return {
+                "building_functions": [],
+                "building_function_names": [],
+                "building_function_descriptions": [],
+                "messages": ["No building functions found in database"]
+            }
+        
+        # Simple keyword matching
+        query_lower = query.lower()
+        keywords = {
+            "wohn": [1000, 1010, 1020, 1023, 1024],  # Wohngebäude
+            "büro": [2020, 1122],  # Bürogebäude
+            "industrie": [2100, 2200],  # Industriegebäude
+            "schule": [3021, 3022, 3023],  # Schulen
+            "kirche": [3041],  # Kirchen
+            "krankenhaus": [3051, 3242],  # Krankenhäuser (3051: Krankenhaus, 3242: Sanatorium)
+            "hotel": [2071],  # Hotels
+            "geschäft": [2050, 2052, 1123],  # Geschäftsgebäude
+            "landwirtschaft": [2721, 2726],  # Landwirtschaft
+        }
+        
+        matched_codes = []
+        for keyword, codes in keywords.items():
+            if keyword in query_lower:
+                matched_codes.extend(codes)
+        
+        if matched_codes:
+            # Filter functions that match our codes
+            matched_functions = [f for f in all_functions if f.get("code") in matched_codes]
+            codes = [f["code"] for f in matched_functions]
+            names = [f.get("name", "") for f in matched_functions]
+            descriptions = [f.get("description", "") for f in matched_functions]
+            
+            return {
+                "building_functions": codes,
+                "building_function_names": names,
+                "building_function_descriptions": descriptions,
+                "messages": [f"Found building functions via keyword matching: {codes} ({names})"]
+            }
+        
+        # No keyword match - return empty but don't error
+        return {
+            "building_functions": [],
+            "building_function_names": [],
+            "building_function_descriptions": [],
+            "messages": ["No specific building function identified, proceeding without filter"]
+        }
+        
+    except Exception as e:
+        return {
+            "building_functions": [],
+            "building_function_names": [],
+            "building_function_descriptions": [],
+            "messages": [f"Fallback function search failed: {str(e)}, proceeding without filter"]
+        }
