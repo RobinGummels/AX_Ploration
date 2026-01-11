@@ -58,7 +58,7 @@ class Neo4jClient:
     def get_building_functions(self) -> List[Dict[str, Any]]:
         """Retrieve all building functions from the database."""
         query = """
-        MATCH (f:Functions)
+        MATCH (f:Function)
         RETURN f.code AS code, 
                f.name AS name,
                f.description AS description
@@ -80,10 +80,9 @@ class Neo4jClient:
             use_large_model: If True, use description_embedding_large, else description_embedding_small
         """
         # Determine which embedding property to use based on model
-        embedding_property = "description_embedding_large" if use_large_model else "description_embedding_small"
         index_name = "function_embeddings_large" if use_large_model else "function_embeddings_small"
         
-        query = f"""
+        query = """
         CALL db.index.vector.queryNodes($index_name, $top_k, $embedding)
         YIELD node, score
         RETURN node.code AS code,
@@ -92,11 +91,33 @@ class Neo4jClient:
                score
         ORDER BY score DESC
         """
-        return self.execute_query(query, {
-            "index_name": index_name,
-            "top_k": top_k,
-            "embedding": embedding
-        })
+        try:
+            return self.execute_query(query, {
+                "index_name": index_name,
+                "top_k": top_k,
+                "embedding": embedding
+            })
+        except Exception as e:
+            # Fallback: if vector index is missing, do a cosine similarity scan on the embedding property
+            error_text = str(e)
+            if "no such vector" in error_text.lower() or "vector schema index" in error_text.lower():
+                prop = "description_embedding_large" if use_large_model else "description_embedding_small"
+                fallback_query = f"""
+                MATCH (f:Function)
+                WHERE f.{prop} IS NOT NULL
+                WITH f, gds.similarity.cosine(f.{prop}, $embedding) AS score
+                RETURN f.code AS code,
+                       f.name AS name,
+                       f.description AS description,
+                       score
+                ORDER BY score DESC
+                LIMIT $top_k
+                """
+                return self.execute_query(fallback_query, {
+                    "embedding": embedding,
+                    "top_k": top_k
+                })
+            raise
 
 
 # Global instance for convenience
