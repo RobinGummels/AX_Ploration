@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Create embeddings for BuildingFunction descriptions in Neo4j.
 
-Reads all Functions nodes from Neo4j, creates embeddings using OpenAI's
+Reads all Function nodes from Neo4j, creates embeddings using OpenAI's
 text-embedding-3-small and text-embedding-3-large models, and stores them
 as description_embedding_small and description_embedding_large properties.
 """
@@ -35,12 +35,12 @@ def load_config() -> Dict[str, str]:
     return config
 
 
-def fetch_functions(driver, database: str) -> List[Dict]:
-    """Fetch all Functions nodes with code, name, and description."""
+def fetch_Function(driver, database: str) -> List[Dict]:
+    """Fetch all Function nodes with code, name, and description."""
     with driver.session(database=database) as session:
         result = session.run(
             """
-            MATCH (f:Functions)
+            MATCH (f:Function)
             WHERE f.description IS NOT NULL
             RETURN f.code AS code, f.name AS name, f.description AS description
             ORDER BY f.code
@@ -72,16 +72,16 @@ def update_embeddings(
     driver,
     database: str,
     openai_client: OpenAI,
-    functions: List[Dict],
+    Function: List[Dict],
     small_model: str,
     large_model: str,
     skip_existing: bool = True
 ):
-    """Create and store embeddings for all functions."""
+    """Create and store embeddings for all Function."""
     
     def _update(tx, code: int, embedding_small: List[float], embedding_large: List[float]):
         query = """
-        MATCH (f:Functions)
+        MATCH (f:Function)
         WHERE f.code = $code
         SET f.description_embedding_small = $embedding_small,
             f.description_embedding_large = $embedding_large
@@ -96,7 +96,7 @@ def update_embeddings(
 
     def _check_existing(tx, code: int):
         query = """
-        MATCH (f:Functions)
+        MATCH (f:Function)
         WHERE f.code = $code
         RETURN f.description_embedding_small IS NOT NULL AS has_small,
                f.description_embedding_large IS NOT NULL AS has_large
@@ -108,10 +108,10 @@ def update_embeddings(
     skipped = 0
     failed = []
 
-    total = len(functions)
+    total = len(Function)
     
     with driver.session(database=database) as session:
-        for idx, func in enumerate(functions, 1):
+        for idx, func in enumerate(Function, 1):
             code = func["code"]
             description = func["description"]
             name = func["name"]
@@ -194,13 +194,13 @@ def main():
     )
 
     try:
-        # Fetch functions
-        print("Fetching Functions nodes from Neo4j...")
-        functions = fetch_functions(neo4j_driver, config["neo4j_database"])
-        print(f"Found {len(functions)} functions with descriptions\n")
+        # Fetch Function
+        print("Fetching Function nodes from Neo4j...")
+        Function = fetch_Function(neo4j_driver, config["neo4j_database"])
+        print(f"Found {len(Function)} Function with descriptions\n")
         
-        if not functions:
-            print("No functions found. Exiting.")
+        if not Function:
+            print("No Function found. Exiting.")
             return 0
         
         # Create embeddings
@@ -214,7 +214,7 @@ def main():
             neo4j_driver,
             config["neo4j_database"],
             openai_client,
-            functions,
+            Function,
             args.small_model,
             args.large_model,
             skip_existing=not args.force
@@ -224,7 +224,7 @@ def main():
         print("\n" + "=" * 60)
         print("SUMMARY")
         print("=" * 60)
-        print(f"Total functions: {len(functions)}")
+        print(f"Total Function: {len(Function)}")
         print(f"Successfully updated: {updated}")
         print(f"Skipped (already exist): {skipped}")
         print(f"Failed: {len(failed)}")

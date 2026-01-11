@@ -51,7 +51,7 @@ def read_functions(csv_path: Path) -> List[Dict[str, str]]:
 def update_descriptions(driver, database: str, functions: List[Dict[str, str]]):
     """Update description property on existing BuildingFunction nodes.
 
-    Matches the actual label (:Functions) and compares the code using string semantics
+    Matches the actual label (:Function) and compares the code using string semantics
     to handle differing property types (string/int). Keeps :BuildingFunction/:Function
     as fallbacks for robustness.
     """
