@@ -19,6 +19,10 @@ NEO4J_DATABASE = os.getenv("NEO4J_DATABASE", "neo4j")
 LANGSMITH_API_KEY = os.getenv("LANGSMITH_API_KEY")
 LANGSMITH_PROJECT = os.getenv("LANGSMITH_PROJECT", "ax_ploration")
 
+# API Configuration
+API_PORT = int(os.getenv("API_PORT", "8000"))
+API_HOST = os.getenv("API_HOST", "localhost")
+
 # Enable LangSmith tracing if API key is present
 if LANGSMITH_API_KEY:
     os.environ["LANGCHAIN_TRACING_V2"] = "true"
