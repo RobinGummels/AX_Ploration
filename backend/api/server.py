@@ -15,6 +15,7 @@ from pydantic import BaseModel
 from typing import Optional, AsyncIterator
 import json
 import sys
+import asyncio
 from pathlib import Path
 
 # Add backend to Python path
@@ -103,63 +104,62 @@ async def health_check():
 
 async def stream_agent_state(query: str) -> AsyncIterator[str]:
     """
-    Stream agent execution state updates as Server-Sent Events.
+    Stream agent execution messages as Server-Sent Events.
     
     Yields JSON objects with:
-    - type: "step" | "final" | "error"
-    - node: current node name (for type="step")
-    - state: current AgentState (for type="step" or "final")
-    - error: error message (for type="error")
+    - type: "message" - incremental messages during execution
+    - content: the message text
+    
+    - type: "final" - complete final state when done
+    - state: the full AgentState as JSON
+    
+    - type: "error" - error occurred
+    - error: error message
     """
     try:
         initial_state = create_initial_state(query)
+        sent_messages = set()  # Track which messages we've already sent
         
-        # Send initial state
-        yield f"data: {json.dumps({'type': 'init', 'state': initial_state}, default=str)}\n\n"
-        
-        # Stream graph execution
+        # Stream graph execution with stream_mode="values" to get complete state each time
         final_state = None
-        for step_output in graph.stream(initial_state):
-            for node_name, updated_state in step_output.items():
-                # Convert state to JSON-serializable format
-                serializable_state = {
-                    "query": updated_state.get("query", ""),
-                    "attributes": updated_state.get("attributes", []),
-                    "building_functions": updated_state.get("building_functions", []),
-                    "building_function_names": updated_state.get("building_function_names", []),
-                    "building_function_descriptions": updated_state.get("building_function_descriptions", []),
-                    "query_type": updated_state.get("query_type", ""),
-                    "cypher_query": updated_state.get("cypher_query", ""),
-                    "results": updated_state.get("results", [])[:10],  # Limit results in stream
-                    "results_count": len(updated_state.get("results", [])),
-                    "spatial_comparison": updated_state.get("spatial_comparison"),
-                    "final_answer": updated_state.get("final_answer", ""),
-                    "error": updated_state.get("error"),
-                    "messages": updated_state.get("messages", [])
-                }
-                
-                # Send step update
-                yield f"data: {json.dumps({'type': 'step', 'node': node_name, 'state': serializable_state}, default=str)}\n\n"
-                
-                final_state = updated_state
+        for step_output in graph.stream(initial_state, stream_mode="values"):
+            # step_output is now the complete state after each node
+            # Get all current messages
+            all_messages = step_output.get("messages", [])
+            
+            # Send only new messages we haven't sent yet
+            for i, message in enumerate(all_messages):
+                message_id = f"{i}:{message}"  # Create unique ID
+                if message_id not in sent_messages:
+                    yield f"data: {json.dumps({'type': 'message', 'content': message}, ensure_ascii=False)}\n\n"
+                    sent_messages.add(message_id)
+                    await asyncio.sleep(0)
+            
+            final_state = step_output
         
-        # Send final state
+        # Send final complete state - convert TypedDict to regular dict for JSON serialization
         if final_state:
-            serializable_final = {
+            # Create a complete copy with all fields from AgentState
+            complete_state = {
                 "query": final_state.get("query", ""),
-                "final_answer": final_state.get("final_answer", ""),
-                "query_type": final_state.get("query_type", ""),
+                "attributes": final_state.get("attributes", []),
+                "needs_building_function": final_state.get("needs_building_function", False),
                 "building_functions": final_state.get("building_functions", []),
                 "building_function_names": final_state.get("building_function_names", []),
-                "results_count": len(final_state.get("results", [])),
+                "building_function_descriptions": final_state.get("building_function_descriptions", []),
+                "query_type": final_state.get("query_type", ""),
+                "cypher_query": final_state.get("cypher_query", ""),
+                "results": final_state.get("results", []),
+                "spatial_comparison": final_state.get("spatial_comparison"),
+                "final_answer": final_state.get("final_answer", ""),
                 "error": final_state.get("error"),
                 "messages": final_state.get("messages", [])
             }
-            yield f"data: {json.dumps({'type': 'final', 'state': serializable_final}, default=str)}\n\n"
+            yield f"data: {json.dumps({'type': 'final', 'state': complete_state}, ensure_ascii=False, default=str)}\n\n"
         
     except Exception as e:
         error_msg = f"Error during agent execution: {str(e)}"
-        yield f"data: {json.dumps({'type': 'error', 'error': error_msg}, default=str)}\n\n"
+        yield f"data: {json.dumps({'type': 'error', 'error': error_msg}, ensure_ascii=False)}\n\n"
 
 
 @app.post("/query")
@@ -194,15 +194,8 @@ async def query_agent(request: QueryRequest):
         initial_state = create_initial_state(request.query)
         final_state = graph.invoke(initial_state)
         
-        return QueryResponse(
-            query=request.query,
-            final_answer=final_state.get("final_answer", ""),
-            query_type=final_state.get("query_type"),
-            building_functions=final_state.get("building_functions"),
-            building_function_names=final_state.get("building_function_names"),
-            results_count=len(final_state.get("results", [])),
-            error=final_state.get("error")
-        )
+        # Return complete AgentState as JSON
+        return final_state
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing query: {str(e)}")
