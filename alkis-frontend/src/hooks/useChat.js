@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-// import { chatAPI } from '../services/api';
+import { chatAPI } from '../services/api';
 // import websocketService from '../services/websocket';
 
 // manages chat messages, loading state and sending messages
@@ -24,7 +24,7 @@ export const useChat = () => {
             // Simulate API delay
             await new Promise(resolve => setTimeout(resolve, 1000));
 
-            // Mock response based on query
+            /* Mock response based on query
             let mockResponse = "I understand you're asking about ALKIS building data. Your backend will process this query once connected.";
 
             if (content.toLowerCase().includes('university')) {
@@ -39,19 +39,24 @@ export const useChat = () => {
                 role: 'assistant',
                 content: mockResponse
             }]);
-
-            /* uncomment when backend connected:
-            import { chatAPI } from '../services/api';
-            
-            const response = await chatAPI.sendMessage(content);
-            
-            if (response.message) {
-              setMessages(prev => [...prev, { 
-                role: 'assistant', 
-                content: response.message 
-              }]);
-            }
             */
+
+            //uncomment when backend connected:
+
+
+            // const response = await chatAPI.sendMessage(content);
+            const { final_answer: final_answer, results: results } = await chatAPI.sendMessage(content);
+            console.log("final_answer", final_answer);
+            console.log("results", results);
+
+
+            if (final_answer) {
+                setMessages(prev => [...prev, {
+                    role: 'assistant',
+                    content: final_answer
+                }]);
+            }
+
 
         } catch (error) {
             console.error('Error sending message:', error);

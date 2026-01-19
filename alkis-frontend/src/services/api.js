@@ -12,8 +12,21 @@ const api = axios.create({
 
 export const chatAPI = {
     sendMessage: async (message) => {
-        const response = await api.post('/chat', { message });
-        return response.data;
+        const healthCheckAPI = await api.get('/');
+        // console.log(healthCheckAPI);
+        const healthCheckDB = await api.get('/health');
+        if (healthCheckAPI.data.status == "online") {
+            if (healthCheckDB.data.status == "healthy") {
+                const response = (await api.post('/query', { query: message, stream: false })); //stream=T or F for results
+                //return (response.data.final_answer, response.data.results);
+                return {
+                    final_answer: response.data.final_answer,
+                    results: response.data.results,
+                };
+            }
+            else console.log("Databse not connected.")
+        }
+        else console.log("API not connected.")
     },
 };
 
