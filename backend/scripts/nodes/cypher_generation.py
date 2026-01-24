@@ -75,24 +75,6 @@ def generate_cypher_district(state: AgentState) -> Dict[str, Any]:
     return _generate_cypher(state, "cypher_district")
 
 
-def generate_cypher_nearby(state: AgentState) -> Dict[str, Any]:
-    """
-    Node: Generate Cypher for proximity/radius queries.
-    
-    Searches for buildings near given coordinates or landmarks.
-    """
-    return _generate_cypher(state, "cypher_nearby")
-
-
-def generate_cypher_custom(state: AgentState) -> Dict[str, Any]:
-    """
-    Node: Generate Cypher for custom area queries.
-    
-    Searches for buildings within user-defined polygons or bounding boxes.
-    """
-    return _generate_cypher(state, "cypher_custom")
-
-
 def generate_cypher_stats(state: AgentState) -> Dict[str, Any]:
     """
     Node: Generate Cypher for statistical queries.

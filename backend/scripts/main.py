@@ -85,10 +85,16 @@ def print_state_update(state: AgentState, step_name: str = ""):
     print(f"{'='*60}\n")
 
 
-def create_initial_state(query: str) -> AgentState:
-    """Create the initial state for a new agent run."""
+def create_initial_state(query: str, spatial_filter: str = None) -> AgentState:
+    """Create the initial state for a new agent run.
+    
+    Args:
+        query: The user's natural language query
+        spatial_filter: Optional WKT geometry string in EPSG:25833 for spatial filtering
+    """
     return {
         "query": query,
+        "spatial_filter": spatial_filter,
         "attributes": [],
         "needs_building_function": False,
         "building_functions": [],
@@ -97,6 +103,7 @@ def create_initial_state(query: str) -> AgentState:
         "query_type": "",
         "cypher_query": "",
         "results": [],
+        "pre_filter_results": None,
         "spatial_comparison": None,
         "final_answer": "",
         "error": None,

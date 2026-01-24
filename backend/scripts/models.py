@@ -6,6 +6,7 @@ class AgentState(TypedDict):
     
     # Input
     query: str                                      # Original user query
+    spatial_filter: Optional[str]                   # Optional WKT geometry for spatial filtering (EPSG:25833)
     
     # Attribute Identification
     attributes: List[str]                           # Identified building attributes (e.g., "floors", "function", "area")
@@ -24,6 +25,7 @@ class AgentState(TypedDict):
     
     # Data Retrieval
     results: List[Dict[str, Any]]                   # Raw data from Neo4j
+    pre_filter_results: Optional[List[Dict[str, Any]]]  # Results before spatial filtering
     
     # Spatial Processing (optional)
     spatial_comparison: Optional[Dict[str, Any]]    # Results from spatial comparison

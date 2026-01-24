@@ -10,6 +10,7 @@ langsmith>=0.1.0
 
 # Data Processing
 beautifulsoup4>=4.12.0
+shapely>=2.0.0
 
 # API
 fastapi>=0.128.0

@@ -183,11 +183,10 @@ def generate_prompt_hints() -> List[str]:
             hints.append(f"Nullable Felder in {label}: Filtere NULL-Werte vor ORDER BY!")
     
     # General Hints:
+    hints.append("WICHTIG: Function.code ist INTEGER! Nutze [1010, 2020] NICHT ['1010', '2020']!")
+    hints.append("District.centroid: Achte darauf, dass der WKT-String WGS84 Koordinaten nutzt!")
     hints.append("Verwende immer MATCH statt OPTIONAL MATCH wenn möglich.")
-    hints.append("Beachte, dass viele Attribute (z.B. house_number) Null-Werte enthalten können. Filter diese immer heraus. Außerdem enthalten Hausnummern manchmal Buchstaben (z.B. '12a'), berücksichtige dies bei numerischen Filtern.")
-    hints.append("Solltest du Felder sortieren wollen, nutze ORDER BY sollten mögliche Null-Werte bereits durch WHERE gefiltert worden sein, da diese ansonsten bei DESC ganz oben stehen.")
-    hints.append("Gib alle relevanten Properties zurück, die Geometrie aller berücksichtigten Gebäude muss allerdings immer enthalten sein.")
-    
+    hints.append("Versuche immer deine Cyper-Queries so zu schreiben, dass du erst über MATCH die relevanten Knoten filterst, dann über WHERE weitere Bedingungen anwendest, und am Ende alle relevanten Gebäude mit collect(b) AS buildings zurückgibst.")
     return hints
 
 

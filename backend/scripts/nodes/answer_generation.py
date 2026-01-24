@@ -61,8 +61,28 @@ def generate_answer(state: AgentState) -> Dict[str, Any]:
         functions_text = ", ".join([f"{name} (Code: {code})" for code, name in zip(building_functions, building_function_names)])
         results_text = f"Gesuchte Gebäudefunktionen: {functions_text}\n\n" + results_text
     
-    # Add spatial analysis if available
-    if spatial_comparison:
+    # Add spatial filtering information if applied
+    spatial_filter = state.get("spatial_filter")
+    if spatial_filter and spatial_comparison:
+        mode = spatial_comparison.get("mode", "unknown")
+        original_count = spatial_comparison.get("original_count", 0)
+        filtered_count = spatial_comparison.get("filtered_count", 0)
+        
+        filter_description = ""
+        if mode == "polygon_containment":
+            filter_description = f"Räumliche Filterung: {original_count} Gebäude gefunden, {filtered_count} innerhalb der angegebenen Geometrie"
+        elif mode == "nearest":
+            count = spatial_comparison.get("count", 0)
+            filter_description = f"Räumliche Filterung: Die {count} nächstgelegenen Gebäude von {original_count} gefundenen Gebäuden"
+        elif mode == "radius":
+            radius = spatial_comparison.get("radius_meters", 0)
+            filter_description = f"Räumliche Filterung: {filtered_count} von {original_count} Gebäuden innerhalb von {radius}m Radius"
+        
+        if filter_description:
+            results_text = f"{filter_description}\n\n" + results_text
+    
+    # Add spatial analysis if available (legacy)
+    elif spatial_comparison:
         results_text += f"\n\nRäumliche Analyse:\n{json.dumps(spatial_comparison, ensure_ascii=False, indent=2)}"
     
     # Add note if results were truncated

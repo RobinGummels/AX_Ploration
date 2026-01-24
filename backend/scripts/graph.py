@@ -7,11 +7,9 @@ from .nodes import (
     embedding_search,
     interpret_query,
     generate_cypher_district,
-    generate_cypher_nearby,
-    generate_cypher_custom,
     generate_cypher_stats,
     execute_query,
-    spatial_comparison,
+    spatial_filtering,
     generate_answer,
     route_function_needed,
     route_query_type
@@ -34,13 +32,11 @@ def create_workflow() -> StateGraph:
     
     # Phase 2: Cypher Generation (different strategies)
     workflow.add_node("generate_cypher_district", generate_cypher_district)
-    workflow.add_node("generate_cypher_nearby", generate_cypher_nearby)
-    workflow.add_node("generate_cypher_custom", generate_cypher_custom)
     workflow.add_node("generate_cypher_stats", generate_cypher_stats)
     
     # Phase 3: Data Retrieval & Processing
     workflow.add_node("execute_query", execute_query)
-    workflow.add_node("spatial_comparison", spatial_comparison)
+    workflow.add_node("spatial_filtering", spatial_filtering)
     
     # Phase 4: Answer Generation
     workflow.add_node("generate_answer", generate_answer)
@@ -71,37 +67,37 @@ def create_workflow() -> StateGraph:
         route_query_type,
         {
             "district": "generate_cypher_district",
-            "nearby": "generate_cypher_nearby",
-            "custom_area": "generate_cypher_custom",
             "statistics": "generate_cypher_stats"
         }
     )
     
     # All cypher generators -> Execute query
     workflow.add_edge("generate_cypher_district", "execute_query")
-    workflow.add_edge("generate_cypher_nearby", "execute_query")
-    workflow.add_edge("generate_cypher_custom", "execute_query")
     workflow.add_edge("generate_cypher_stats", "execute_query")
     
-    # Conditional: Need spatial comparison?
-    def route_spatial_needed(state: AgentState) -> Literal["spatial", "answer"]:
-        """Determine if spatial comparison is needed."""
-        query_type = state.get("query_type", "")
-        if query_type in ["nearby", "custom_area"]:
-            return "spatial"
-        return "answer"
+    # Conditional: Need spatial filtering?
+    def route_spatial_filter_needed(state: AgentState) -> Literal["spatial_filter", "answer"]:
+        """Determine if spatial filtering is needed based on spatial_filter parameter."""
+        has_spatial_filter = bool(state.get("spatial_filter"))
+        
+        if has_spatial_filter:
+            # User provided spatial filter WKT - apply spatial filtering
+            return "spatial_filter"
+        else:
+            # No spatial processing needed
+            return "answer"
     
     workflow.add_conditional_edges(
         "execute_query",
-        route_spatial_needed,
+        route_spatial_filter_needed,
         {
-            "spatial": "spatial_comparison",
+            "spatial_filter": "spatial_filtering",
             "answer": "generate_answer"
         }
     )
     
-    # Spatial comparison -> Answer
-    workflow.add_edge("spatial_comparison", "generate_answer")
+    # Spatial filtering -> Answer
+    workflow.add_edge("spatial_filtering", "generate_answer")
     
     # Answer -> End
     workflow.add_edge("generate_answer", END)

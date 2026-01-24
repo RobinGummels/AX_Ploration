@@ -26,7 +26,7 @@ def route_function_needed(state: AgentState) -> Literal["needs_function", "no_fu
     return "no_function"
 
 
-def route_query_type(state: AgentState) -> Literal["district", "nearby", "custom_area", "statistics"]:
+def route_query_type(state: AgentState) -> Literal["district", "statistics"]:
     """
     Router: Route to appropriate Cypher generator based on query type.
     
@@ -38,8 +38,9 @@ def route_query_type(state: AgentState) -> Literal["district", "nearby", "custom
     """
     query_type = state.get("query_type", "district")
     
-    # Validate query type
-    valid_types = ["district", "nearby", "custom_area", "statistics"]
+    # Only district and statistics are valid now
+    # (nearby and custom_area have been removed)
+    valid_types = ["district", "statistics"]
     
     if query_type in valid_types:
         return query_type

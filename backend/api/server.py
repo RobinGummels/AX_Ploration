@@ -48,6 +48,7 @@ class QueryRequest(BaseModel):
     """Request model for query endpoint."""
     query: str
     stream: Optional[bool] = True
+    spatial_filter: Optional[str] = None  # WKT geometry string in EPSG:25833
 
 
 class QueryResponse(BaseModel):
@@ -102,7 +103,7 @@ async def health_check():
     }
 
 
-async def stream_agent_state(query: str) -> AsyncIterator[str]:
+async def stream_agent_state(query: str, spatial_filter: str = None) -> AsyncIterator[str]:
     """
     Stream agent execution messages as Server-Sent Events.
     
@@ -117,7 +118,7 @@ async def stream_agent_state(query: str) -> AsyncIterator[str]:
     - error: error message
     """
     try:
-        initial_state = create_initial_state(query)
+        initial_state = create_initial_state(query, spatial_filter)
         sent_messages = set()  # Track which messages we've already sent
         
         # Stream graph execution with stream_mode="values" to get complete state each time
@@ -180,7 +181,7 @@ async def query_agent(request: QueryRequest):
     # Streaming response
     if request.stream:
         return StreamingResponse(
-            stream_agent_state(request.query),
+            stream_agent_state(request.query, request.spatial_filter),
             media_type="text/event-stream",
             headers={
                 "Cache-Control": "no-cache",
@@ -191,7 +192,7 @@ async def query_agent(request: QueryRequest):
     
     # Non-streaming response
     try:
-        initial_state = create_initial_state(request.query)
+        initial_state = create_initial_state(request.query, request.spatial_filter)
         final_state = graph.invoke(initial_state)
         
         # Return complete AgentState as JSON

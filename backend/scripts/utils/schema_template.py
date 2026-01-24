@@ -90,12 +90,9 @@ SCHEMA_DICT = {
 # Important hints for Cypher query generation
 SCHEMA_HINTS = [
     "WICHTIG: Function.code ist INTEGER! Nutze [1010, 2020] NICHT ['1010', '2020']!",
-    "Building.centroid: Parse String und konvertiere zu Point für Distanzberechnungen. Achte darauf, dass der WKT-String ETRS89 Koordinaten nutzt!",
     "District.centroid: Achte darauf, dass der WKT-String WGS84 Koordinaten nutzt!",
     "Verwende immer MATCH statt OPTIONAL MATCH wenn möglich.",
-    "Beachte, dass viele Attribute (z.B. house_number) Null-Werte oder leere Strings enthalten können. Filter diese immer heraus, wenn du explizit danach suchst oder diese sortieren möchtest. Außerdem enthalten Hausnummern manchmal Buchstaben (z.B. '12a'), berücksichtige dies bei numerischen Filtern.",
-    "Solltest du Felder sortieren wollen, nutze ORDER BY. Dabei sollten mögliche Null-Werte und leere Strings bereits durch WHERE gefiltert worden sein, da diese ansonsten bei DESC ganz oben stehen.",
-    "Gebe immer alle Attribute der Building-Nodes zurück. Auch bei Aggregationen für statische Analysen, sollen neben der Aggregation immer auch alle Building-Nodes einzeln zurückgegeben werden. Verwende dazu immer collect(b) AS buildings"
+    "Versuche immer deine Cyper-Queries so zu schreiben, dass du erst über MATCH die relevanten Knoten filterst, dann über WHERE weitere Bedingungen anwendest, und am Ende alle relevanten Gebäude mit collect(b) AS buildings zurückgibst."
 ]
 
 
