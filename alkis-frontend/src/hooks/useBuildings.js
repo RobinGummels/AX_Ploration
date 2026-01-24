@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
 import { buildingsAPI } from '../services/api';
-import { useChat } from './useChat';
 
 // manages building data, selection state and fetching logic
 
-export const useBuildings = (initialQuery = null) => {
-    const [buildings, setBuildings] = useState([]);
+export const useBuildings = (externalBuildings = [], initialQuery = null) => {
+    const [buildings, setBuildings] = useState(externalBuildings || []);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [selectedIds, setSelectedIds] = useState([]);
 
-    const { messages, isLoading, sendMessage, processedBuildings } = useChat();
-    setBuildings(processedBuildings);
+    // Sync incoming buildings from chat/API into local state without causing render loops
+    useEffect(() => {
+        setBuildings(externalBuildings || []);
+    }, [externalBuildings]);
 
     /*
     const fetchBuildings = async (query) => {

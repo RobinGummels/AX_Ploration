@@ -11,13 +11,13 @@ import { useBuildings } from '../../hooks/useBuildings';
 
 const Layout = () => {
     const [activeTab, setActiveTab] = useState('map');
-    const { messages, isLoading, sendMessage, processedBuildings } = useChat();
+    const { messages, isLoading, sendMessage, buildings: chatBuildings } = useChat();
     const {
         buildings,
         selectedIds,
         toggleSelection,
         selectAll
-    } = useBuildings();
+    } = useBuildings(chatBuildings);
 
     // Mock query explanation, connect to backend
     const queryExplanation = {
