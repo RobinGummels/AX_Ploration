@@ -33,10 +33,6 @@ const BuildingCard = ({ building, isSelected, onToggle }) => {
                     <span>{formatArea(building.area)}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <span className="text-gray-400">📍</span>
-                    <span>{formatDistance(building.distance)}</span>
-                </div>
-                <div className="flex items-center gap-2">
                     <span className="text-gray-400">📊</span>
                     <span>{building.district}</span>
                 </div>

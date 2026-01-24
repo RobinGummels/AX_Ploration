@@ -8,7 +8,9 @@ const parseBuildings = (results) => {
     return results.map((item, index) => {
         // item is an array with one object containing 'gebäudegemoetrie'
         const gebaeude = Array.isArray(item) ? item[0] : item;
-        const geoJsonString = gebaeude.gebaeudeGeometrie;
+
+        const firstKey = Object.keys(item)[0];
+        const geoJsonString = gebaeude[firstKey];
 
         try {
             const geoJson = JSON.parse(geoJsonString);
