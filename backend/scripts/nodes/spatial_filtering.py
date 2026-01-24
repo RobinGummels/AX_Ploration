@@ -388,7 +388,6 @@ def spatial_filtering(state: AgentState) -> Dict[str, Any]:
         
         return {
             "results": updated_results,
-            "pre_filter_results": state.get("results"),  # Save original results before filtering
             "spatial_comparison": filter_info,
             "messages": [message]
         }

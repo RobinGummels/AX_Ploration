@@ -103,7 +103,6 @@ def create_initial_state(query: str, spatial_filter: str = None) -> AgentState:
         "query_type": "",
         "cypher_query": "",
         "results": [],
-        "pre_filter_results": None,
         "spatial_comparison": None,
         "final_answer": "",
         "error": None,

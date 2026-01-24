@@ -25,7 +25,6 @@ class AgentState(TypedDict):
     
     # Data Retrieval
     results: List[Dict[str, Any]]                   # Raw data from Neo4j
-    pre_filter_results: Optional[List[Dict[str, Any]]]  # Results before spatial filtering
     
     # Spatial Processing (optional)
     spatial_comparison: Optional[Dict[str, Any]]    # Results from spatial comparison
