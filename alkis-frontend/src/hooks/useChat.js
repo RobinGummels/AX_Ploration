@@ -1,12 +1,47 @@
 import { useState, useEffect } from 'react';
+import proj4 from 'proj4';
 import { chatAPI } from '../services/api';
 // import websocketService from '../services/websocket';
 
 // manages chat messages, loading state and sending messages
 
+// Define transformer: EPSG:25833 (UTM 33N meters) -> EPSG:4326 (lon/lat)
+const toWgs84 = proj4('EPSG:25833', 'EPSG:4326');
+
+// Recursively transform coordinates (Polygon / MultiPolygon)
+const transformCoordinates = (coords) => {
+    if (!Array.isArray(coords)) return coords;
+    if (typeof coords[0] === 'number') {
+        return toWgs84.forward(coords); // [lon, lat]
+    }
+    return coords.map(transformCoordinates);
+};
+
+// Normalize possible Feature/FeatureCollection to Geometry object and transform
+const transformGeometryToWgs84 = (geoJson) => {
+    if (!geoJson) return null;
+
+    // If FeatureCollection, take first feature geometry
+    if (geoJson.type === 'FeatureCollection' && Array.isArray(geoJson.features) && geoJson.features.length > 0) {
+        return transformGeometryToWgs84(geoJson.features[0].geometry);
+    }
+
+    // If Feature, use its geometry
+    if (geoJson.type === 'Feature' && geoJson.geometry) {
+        return transformGeometryToWgs84(geoJson.geometry);
+    }
+
+    if (!geoJson.coordinates) return geoJson;
+
+    return {
+        ...geoJson,
+        coordinates: transformCoordinates(geoJson.coordinates),
+    };
+};
+
 const parseBuildings = (results) => {
     return results.map((item, index) => {
-        // item is an array with one object containing 'gebäudegemoetrie'
+        // item is an array with one object containing geometry string
         const gebaeude = Array.isArray(item) ? item[0] : item;
 
         const firstKey = Object.keys(item)[0];
@@ -14,11 +49,12 @@ const parseBuildings = (results) => {
 
         try {
             const geoJson = JSON.parse(geoJsonString);
+            const geometry = transformGeometryToWgs84(geoJson);
 
             return {
                 id: index, // or use a unique ID if available
                 name: gebaeude.name || 'Building', // adjust based on actual data
-                geometry: geoJson,
+                geometry,
                 area: gebaeude.area || 0,
                 floors: gebaeude.floors || 0,
                 district: gebaeude.district || ''
