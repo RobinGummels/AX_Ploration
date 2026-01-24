@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { buildingsAPI } from '../services/api';
+import { useChat } from './useChat';
 
 // manages building data, selection state and fetching logic
 
@@ -9,6 +10,10 @@ export const useBuildings = (initialQuery = null) => {
     const [error, setError] = useState(null);
     const [selectedIds, setSelectedIds] = useState([]);
 
+    const { messages, isLoading, sendMessage, processedBuildings } = useChat();
+    setBuildings(processedBuildings);
+
+    /*
     const fetchBuildings = async (query) => {
         setLoading(true);
         setError(null);
@@ -20,13 +25,13 @@ export const useBuildings = (initialQuery = null) => {
         } finally {
             setLoading(false);
         }
-    };
+    }; 
 
     useEffect(() => {
         if (initialQuery) {
             fetchBuildings(initialQuery);
         }
-    }, []);
+    }, []); */
 
     const toggleSelection = (id) => {
         setSelectedIds(prev =>
@@ -52,6 +57,6 @@ export const useBuildings = (initialQuery = null) => {
         toggleSelection,
         selectAll,
         deselectAll,
-        refetch: fetchBuildings,
+        //refetch: fetchBuildings,
     };
 };

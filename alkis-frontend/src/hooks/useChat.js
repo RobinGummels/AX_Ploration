@@ -4,6 +4,30 @@ import { chatAPI } from '../services/api';
 
 // manages chat messages, loading state and sending messages
 
+const parseBuildings = (results) => {
+    return results.map((item, index) => {
+        // item is an array with one object containing 'gebäudegemoetrie'
+        const gebaeude = Array.isArray(item) ? item[0] : item;
+        const geoJsonString = gebaeude.gebaeudeGeometrie;
+
+        try {
+            const geoJson = JSON.parse(geoJsonString);
+
+            return {
+                id: index, // or use a unique ID if available
+                name: gebaeude.name || 'Building', // adjust based on actual data
+                geometry: geoJson,
+                area: gebaeude.area || 0,
+                floors: gebaeude.floors || 0,
+                district: gebaeude.district || ''
+            };
+        } catch (error) {
+            console.error('Error parsing GeoJSON:', error);
+            return null;
+        }
+    }).filter(b => b !== null);
+};
+
 export const useChat = () => {
     const [messages, setMessages] = useState([
         {
@@ -12,6 +36,7 @@ export const useChat = () => {
         }
     ]);
     const [isLoading, setIsLoading] = useState(false);
+    const [buildings, setBuildings] = useState([]);
 
     const sendMessage = async (content) => {
         // Add user message
@@ -49,6 +74,11 @@ export const useChat = () => {
             console.log("final_answer", final_answer);
             console.log("results", results);
 
+            const processedBuildings = parseBuildings(results);
+            console.log("processedBuildings", processedBuildings);
+            setBuildings(processedBuildings);
+
+
 
             if (final_answer) {
                 setMessages(prev => [...prev, {
@@ -73,5 +103,6 @@ export const useChat = () => {
         messages,
         isLoading,
         sendMessage,
+        buildings,
     };
 };

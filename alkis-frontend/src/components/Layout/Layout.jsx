@@ -11,7 +11,7 @@ import { useBuildings } from '../../hooks/useBuildings';
 
 const Layout = () => {
     const [activeTab, setActiveTab] = useState('map');
-    const { messages, isLoading, sendMessage } = useChat();
+    const { messages, isLoading, sendMessage, processedBuildings } = useChat();
     const {
         buildings,
         selectedIds,

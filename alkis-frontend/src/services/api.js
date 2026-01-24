@@ -30,6 +30,8 @@ export const chatAPI = {
     },
 };
 
+
+
 export const buildingsAPI = {
     search: async (query) => {
         const response = await api.get('/buildings/search', { params: query });
