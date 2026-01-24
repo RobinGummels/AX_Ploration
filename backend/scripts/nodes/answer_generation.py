@@ -42,8 +42,16 @@ def generate_answer(state: AgentState) -> Dict[str, Any]:
         }
     
     # Format results for the LLM
-    # Limit to first 20 results for context length
+    # Limit either to general first 20 results. Sometimes all buildings are stored in results['buildings'], so limit to first 20 of those for context length
     results_to_show = results[:20]
+    if "buildings" in results[0]:
+        results_to_show = []
+        for res in results:
+            limited_res = res.copy()
+            limited_res["buildings"] = res["buildings"][:20]
+            results_to_show.append(limited_res)
+            if len(results_to_show) >= 20:
+                break
     results_text = json.dumps(results_to_show, ensure_ascii=False, indent=2)
     
     # Add building function context if used

@@ -93,9 +93,9 @@ SCHEMA_HINTS = [
     "Building.centroid: Parse String und konvertiere zu Point für Distanzberechnungen. Achte darauf, dass der WKT-String ETRS89 Koordinaten nutzt!",
     "District.centroid: Achte darauf, dass der WKT-String WGS84 Koordinaten nutzt!",
     "Verwende immer MATCH statt OPTIONAL MATCH wenn möglich.",
-    "Beachte, dass viele Attribute (z.B. house_number) Null-Werte enthalten können. Filter diese immer heraus. Außerdem enthalten Hausnummern manchmal Buchstaben (z.B. '12a'), berücksichtige dies bei numerischen Filtern.",
-    "Solltest du Felder sortieren wollen, nutze ORDER BY sollten mögliche Null-Werte bereits durch WHERE gefiltert worden sein, da diese ansonsten bei DESC ganz oben stehen.",
-    "Gib alle relevanten Properties zurück, die Geometrie aller berücksichtigten Gebäude muss allerdings immer enthalten sein."
+    "Beachte, dass viele Attribute (z.B. house_number) Null-Werte oder leere Strings enthalten können. Filter diese immer heraus, wenn du explizit danach suchst oder diese sortieren möchtest. Außerdem enthalten Hausnummern manchmal Buchstaben (z.B. '12a'), berücksichtige dies bei numerischen Filtern.",
+    "Solltest du Felder sortieren wollen, nutze ORDER BY. Dabei sollten mögliche Null-Werte und leere Strings bereits durch WHERE gefiltert worden sein, da diese ansonsten bei DESC ganz oben stehen.",
+    "Gebe immer alle Attribute der Building-Nodes zurück. Auch bei Aggregationen für statische Analysen, sollen neben der Aggregation immer auch alle Building-Nodes einzeln zurückgegeben werden. Verwende dazu immer collect(b) AS buildings"
 ]
 
 
