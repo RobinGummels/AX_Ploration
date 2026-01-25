@@ -20,9 +20,12 @@ const ChatSidebar = ({ messages, onSendMessage, isLoading }) => {
         <div className="w-80 bg-gray-900 flex flex-col border-r border-gray-800">
             {/* Header */}
             <div className="p-4 border-b border-gray-800 flex items-center gap-3">
-                <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center font-bold">
-                    AX
-                </div>
+                <img
+                    src="/logo.svg"
+                    alt="AX Logo"
+                    className="w-8 h-8"
+                />
+
                 <div>
                     <div className="font-semibold">AX_Ploration</div>
                     <div className="text-xs text-gray-400">Berlin Pilot Region</div>
@@ -32,8 +35,8 @@ const ChatSidebar = ({ messages, onSendMessage, isLoading }) => {
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 <div className="bg-gray-800 rounded-lg p-3">
-                    <div className="text-sm font-semibold mb-2">Conversational Search</div>
-                    <div className="text-xs text-gray-400">Ask questions about ALKIS building data</div>
+                    <div className="text-sm font-semibold mb-2">Let's AX_Plore!</div>
+                    <div className="text-xs text-gray-400">Buildings are waiting for you...</div>
                 </div>
 
                 {messages.map((message, idx) => (

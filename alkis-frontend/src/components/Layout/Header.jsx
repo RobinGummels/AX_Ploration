@@ -107,14 +107,7 @@ const Header = ({ activeTab, onTabChange, buildings = [], selectedIds = [] }) =>
                         )}
                     </div>
 
-                    {/* Settings Button */}
-                    <button
-                        className="p-2 hover:bg-gray-800 rounded transition-colors"
-                        title="Settings"
-                        onClick={() => setShowSettingsModal(true)}
-                    >
-                        <Settings className="w-4 h-4" />
-                    </button>
+
 
                     {/* Help Button */}
                     <button
@@ -125,29 +118,8 @@ const Header = ({ activeTab, onTabChange, buildings = [], selectedIds = [] }) =>
                         <HelpCircle className="w-4 h-4" />
                     </button>
 
-                    {/* Account Button */}
-                    <button
-                        className="p-2 hover:bg-gray-800 rounded transition-colors"
-                        title="Account"
-                        onClick={() => setShowAccountModal(true)}
-                    >
-                        <User className="w-4 h-4" />
-                    </button>
                 </div>
             </div>
-
-            {/* Settings Modal */}
-            <Modal
-                isOpen={showSettingsModal}
-                onClose={() => setShowSettingsModal(false)}
-                title="Settings"
-            >
-                <div className="space-y-4 text-gray-300">
-                    <p>
-                        Here, you can change your settings.
-                    </p>
-                </div>
-            </Modal>
 
             {/* Help Modal */}
             <Modal
@@ -158,19 +130,6 @@ const Header = ({ activeTab, onTabChange, buildings = [], selectedIds = [] }) =>
                 <div className="space-y-4 text-gray-300">
                     <p>
                         If you need help, feel free to contact us at: ...
-                    </p>
-                </div>
-            </Modal>
-
-            {/* Account Modal */}
-            <Modal
-                isOpen={showAccountModal}
-                onClose={() => setShowAccountModal(false)}
-                title="Account"
-            >
-                <div className="space-y-4 text-gray-300">
-                    <p>
-                        Welcome to your account!
                     </p>
                 </div>
             </Modal>
