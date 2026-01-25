@@ -6,6 +6,7 @@ import FilterBar from './FilterBar';
 import Select from '../UI/Select';
 import EmptyState from '../UI/EmptyState';
 import Loading from '../UI/Loading';
+import { exportSelectedBuildings } from '../../utils/exportUtils';
 
 // right panel with building list, filters, export button
 
@@ -28,9 +29,12 @@ const ResultsSidebar = ({
     ];
 
     const handleExport = () => {
-        const selectedBuildings = buildings.filter(b => selectedIds.includes(b.id));
-        console.log('Exporting:', selectedBuildings);
-        // Implement export logic
+        if (selectedIds.length === 0) {
+            alert('No buildings selected. Please select buildings to export.');
+            return;
+        }
+        console.log('Exporting:', selectedIds.length, 'buildings');
+        exportSelectedBuildings(buildings, selectedIds);
     };
 
     const handleRemoveFilter = (filter) => {
@@ -67,6 +71,16 @@ const ResultsSidebar = ({
                     className="w-full bg-gray-800 py-2 rounded text-sm hover:bg-gray-700"
                 >
                     Select all
+                </button>
+
+                <button
+                    onClick={() => {
+                        // Reject all by passing empty array
+                        selectedIds.forEach(id => onToggleSelection(id));
+                    }}
+                    className="w-full bg-gray-800 py-2 rounded text-sm hover:bg-gray-700 mt-2"
+                >
+                    Reject all
                 </button>
 
                 <button

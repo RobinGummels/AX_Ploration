@@ -43,26 +43,29 @@ export const useMap = (buildings, selectedIds) => {
 
         // Add building polygons
         buildings.forEach(building => {
-            if (building.geometry && building.geometry.coordinates) {
+            if (building.geometry) {
                 const isSelected = selectedIds.includes(building.id);
 
-                const polygon = L.polygon(building.geometry.coordinates, {
-                    color: isSelected ? '#3b82f6' : '#6b7280',
-                    fillColor: isSelected ? '#1e40af' : '#374151',
-                    fillOpacity: 0.6,
-                    weight: 2,
+                // Let Leaflet handle GeoJSON coordinate order (lon/lat)
+                const layer = L.geoJSON(building.geometry, {
+                    style: () => ({
+                        color: isSelected ? '#3b82f6' : '#6b7280',
+                        fillColor: isSelected ? '#1e40af' : '#374151',
+                        fillOpacity: 0.6,
+                        weight: 2,
+                    })
                 }).addTo(mapInstanceRef.current);
 
-                polygon.bindPopup(`
+                layer.bindPopup(`
           <div style="color: black;">
             <strong>${building.name}</strong><br/>
-            Area: ${building.area.toLocaleString()} m²<br/>
+            Area: ${Number(building.area).toLocaleString()} m²<br/>
             Floors: ${building.floors}<br/>
             District: ${building.district}
           </div>
         `);
 
-                layersRef.current[building.id] = polygon;
+                layersRef.current[building.id] = layer;
             }
         });
 

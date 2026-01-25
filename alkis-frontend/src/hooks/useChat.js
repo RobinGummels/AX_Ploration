@@ -5,6 +5,11 @@ import { chatAPI } from '../services/api';
 
 // manages chat messages, loading state and sending messages
 
+// Register projection once so proj4 can parse EPSG:25833 payloads from backend
+if (!proj4.defs('EPSG:25833')) {
+    proj4.defs('EPSG:25833', '+proj=utm +zone=33 +ellps=GRS80 +datum=ETRS89 +units=m +no_defs');
+}
+
 // Define transformer: EPSG:25833 (UTM 33N meters) -> EPSG:4326 (lon/lat)
 const toWgs84 = proj4('EPSG:25833', 'EPSG:4326');
 
@@ -39,31 +44,46 @@ const transformGeometryToWgs84 = (geoJson) => {
     };
 };
 
+const parseCentroid = (centroidWkt) => {
+    if (!centroidWkt || typeof centroidWkt !== 'string') return null;
+    const match = centroidWkt.match(/Point\s*\(\s*([\d.+-]+)\s+([\d.+-]+)\s*\)/i);
+    if (!match) return null;
+    const x = parseFloat(match[1]);
+    const y = parseFloat(match[2]);
+    const [lon, lat] = toWgs84.forward([x, y]);
+    return { lat, lon };
+};
+
 const parseBuildings = (results) => {
-    return results.map((item, index) => {
-        // item is an array with one object containing geometry string
-        const gebaeude = Array.isArray(item) ? item[0] : item;
+    const buildings = results[0].buildings || [];
+    console.log("raw buildings from backend:", buildings);
 
-        const firstKey = Object.keys(item)[0];
-        const geoJsonString = gebaeude[firstKey];
-
+    return buildings.map((item, index) => {
         try {
+            if (index == 0) {
+                console.log("parsing building entry:", item);
+            }
+            const geoJsonString = item?.geometry_geojson;
+            if (!geoJsonString) return null;
+
             const geoJson = JSON.parse(geoJsonString);
             const geometry = transformGeometryToWgs84(geoJson);
+            const centroid = parseCentroid(item?.centroid);
 
             return {
-                id: index, // or use a unique ID if available
-                name: gebaeude.name || 'Building', // adjust based on actual data
+                id: item?.id ?? index,
+                name: item?.name || item?.street_name || 'Building',
                 geometry,
-                area: gebaeude.area || 0,
-                floors: gebaeude.floors || 0,
-                district: gebaeude.district || ''
+                area: item?.area ? Number(item.area) : 0,
+                floors: item?.floors_above ?? 0,
+                district: item?.post_code || '',
+                centroid,
             };
         } catch (error) {
-            console.error('Error parsing GeoJSON:', error);
+            console.error('Error parsing building entry:', error, item);
             return null;
         }
-    }).filter(b => b !== null);
+    }).filter(Boolean);
 };
 
 export const useChat = () => {
@@ -110,13 +130,11 @@ export const useChat = () => {
             // const response = await chatAPI.sendMessage(content);
             const { final_answer: final_answer, results: results } = await chatAPI.sendMessage(content);
             console.log("final_answer", final_answer);
-            console.log("results", results);
+            // console.log("results", results);
 
             const processedBuildings = parseBuildings(results);
             console.log("processedBuildings", processedBuildings);
             setBuildings(processedBuildings);
-
-
 
             if (final_answer) {
                 setMessages(prev => [...prev, {

@@ -12,6 +12,7 @@ const Header = ({ activeTab, onTabChange, buildings = [], selectedIds = [] }) =>
     const [showAccountModal, setShowAccountModal] = useState(false);
 
     const handleExportAll = () => {
+        console.log('Export All clicked, buildings:', buildings);
         if (buildings.length === 0) {
             alert('No buildings to export. Please perform a search first.');
             return;
@@ -21,6 +22,7 @@ const Header = ({ activeTab, onTabChange, buildings = [], selectedIds = [] }) =>
     };
 
     const handleExportSelected = () => {
+        console.log('Export Selected clicked, selectedIds:', selectedIds);
         if (selectedIds.length === 0) {
             alert('No buildings selected. Please select buildings from the results panel.');
             return;
