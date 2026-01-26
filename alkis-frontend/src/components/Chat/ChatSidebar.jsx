@@ -5,16 +5,25 @@ import ChatInput from './ChatInput';
 // for left side, icon and header, chat window
 // chat history and input field
 
-const ChatSidebar = ({ messages, onSendMessage, isLoading }) => {
+const ChatSidebar = ({ messages, onSendMessage, isLoading, showThinking, onToggleThinking, thinkingMessages }) => {
     const messagesEndRef = useRef(null);
+    const thinkingEndRef = useRef(null);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
 
+    const scrollThinkingToBottom = () => {
+        thinkingEndRef.current?.scrollIntoView({ behavior: 'auto' });
+    };
+
     useEffect(() => {
         scrollToBottom();
-    }, [messages]);
+    }, [messages, thinkingMessages]);
+
+    useEffect(() => {
+        scrollThinkingToBottom();
+    }, [thinkingMessages]);
 
     return (
         <div className="w-80 bg-gray-900 flex flex-col border-r border-gray-800">
@@ -56,9 +65,31 @@ const ChatSidebar = ({ messages, onSendMessage, isLoading }) => {
                 <div ref={messagesEndRef} />
             </div>
 
+            {/* Thinking Process Box */}
+            {thinkingMessages.length > 0 && (
+                <div className="px-4 pt-3 pb-3">
+                    <div className="bg-gray-800 rounded-lg p-3">
+                        <div className="text-xs text-gray-400 mb-2 font-semibold">Thinking...</div>
+                        <div className="space-y-1.5 max-h-32 overflow-y-auto">
+                            {thinkingMessages.map((msg, idx) => (
+                                <div key={idx} className="text-xs text-gray-400 leading-relaxed">
+                                    {msg}
+                                </div>
+                            ))}
+                            <div ref={thinkingEndRef} />
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Input */}
             <div className="p-4 border-t border-gray-800">
-                <ChatInput onSend={onSendMessage} disabled={isLoading} />
+                <ChatInput 
+                    onSend={onSendMessage} 
+                    disabled={isLoading}
+                    showThinking={showThinking}
+                    onToggleThinking={onToggleThinking}
+                />
             </div>
         </div>
     );

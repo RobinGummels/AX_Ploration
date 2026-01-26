@@ -11,7 +11,7 @@ import { useBuildings } from '../../hooks/useBuildings';
 
 const Layout = () => {
     const [activeTab, setActiveTab] = useState('map');
-    const { messages, isLoading, sendMessage, buildings: chatBuildings } = useChat();
+    const { messages, isLoading, sendMessage, buildings: chatBuildings, showThinking, setShowThinking, thinkingMessages } = useChat();
     const {
         buildings,
         selectedIds,
@@ -38,6 +38,9 @@ const Layout = () => {
                 messages={messages}
                 onSendMessage={sendMessage}
                 isLoading={isLoading}
+                showThinking={showThinking}
+                onToggleThinking={setShowThinking}
+                thinkingMessages={thinkingMessages}
             />
 
             {/* Center: Map/Statistics */}

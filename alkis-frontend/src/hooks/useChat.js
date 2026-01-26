@@ -95,12 +95,15 @@ export const useChat = () => {
     ]);
     const [isLoading, setIsLoading] = useState(false);
     const [buildings, setBuildings] = useState([]);
+    const [showThinking, setShowThinking] = useState(false);
+    const [thinkingMessages, setThinkingMessages] = useState([]);
 
     const sendMessage = async (content) => {
         // Add user message
         const userMessage = { role: 'user', content };
         setMessages(prev => [...prev, userMessage]);
         setIsLoading(true);
+        setThinkingMessages([]);
 
         try {
             // Mock response until backend is ready
@@ -128,7 +131,11 @@ export const useChat = () => {
 
 
             // const response = await chatAPI.sendMessage(content);
-            const { final_answer: final_answer, results: results } = await chatAPI.sendMessage(content);
+            const { final_answer: final_answer, results: results } = await chatAPI.sendMessage(
+                content,
+                showThinking,
+                (thinkingMsg) => setThinkingMessages(prev => [...prev, thinkingMsg])
+            );
             console.log("final_answer", final_answer);
             // console.log("results", results);
 
@@ -160,5 +167,8 @@ export const useChat = () => {
         isLoading,
         sendMessage,
         buildings,
+        showThinking,
+        setShowThinking,
+        thinkingMessages,
     };
 };

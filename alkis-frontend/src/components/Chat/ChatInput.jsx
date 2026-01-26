@@ -3,7 +3,7 @@ import { Search } from 'lucide-react';
 
 // text input field, send button at bottom of chat window
 
-const ChatInput = ({ onSend, disabled }) => {
+const ChatInput = ({ onSend, disabled, showThinking, onToggleThinking }) => {
     const [value, setValue] = useState('');
 
     const handleSubmit = (e) => {
@@ -16,6 +16,24 @@ const ChatInput = ({ onSend, disabled }) => {
 
     return (
         <form onSubmit={handleSubmit} className="flex gap-2">
+            <div className="flex items-center gap-2">
+                <input
+                    type="checkbox"
+                    id="showThinking"
+                    checked={showThinking}
+                    onChange={(e) => onToggleThinking(e.target.checked)}
+                    disabled={disabled}
+                    className="w-4 h-4 text-blue-600 bg-gray-800 border-gray-600 rounded focus:ring-blue-600 focus:ring-2 cursor-pointer disabled:opacity-50"
+                    title="Show thinking process"
+                />
+                <label 
+                    htmlFor="showThinking" 
+                    className="text-xs text-gray-400 cursor-pointer select-none"
+                    title="Show thinking process"
+                >
+                    Show thinking
+                </label>
+            </div>
             <input
                 type="text"
                 value={value}
