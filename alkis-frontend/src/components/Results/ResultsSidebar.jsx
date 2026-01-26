@@ -15,7 +15,7 @@ const ResultsSidebar = ({
     selectedIds,
     onToggleSelection,
     onSelectAll,
-    query,
+    cypherQuery,
     loading = false
 }) => {
     const [sortBy, setSortBy] = useState('distance');
@@ -93,8 +93,8 @@ const ResultsSidebar = ({
                 </button>
             </div>
 
-            {/* Query Explanation, this needs changing because it shows up when loading page, not wanted*/}
-            <QueryExplanation query={query} />
+            {/* Query Explanation*/}
+            <QueryExplanation cypherQuery={cypherQuery} />
 
             {/* Filter Bar */}
             <FilterBar

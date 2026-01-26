@@ -11,7 +11,7 @@ import { useBuildings } from '../../hooks/useBuildings';
 
 const Layout = () => {
     const [activeTab, setActiveTab] = useState('map');
-    const { messages, isLoading, sendMessage, buildings: chatBuildings } = useChat();
+    const { messages, isLoading, sendMessage, buildings: chatBuildings, cypherQuery } = useChat();
     const {
         buildings,
         selectedIds,
@@ -19,17 +19,10 @@ const Layout = () => {
         selectAll
     } = useBuildings(chatBuildings);
 
-    // Mock query explanation, connect to backend
-    const queryExplanation = {
-        code: '2100',
-        type: 'University',
-        reason: 'Query matched "university" keyword',
-        filters: ['Function: University (2100)', 'Area: ≥ 2,000 m²']
-    };
-
     const handleTabChange = (tab) => {
         setActiveTab(tab);
     };
+
 
     return (
         <div className="flex h-screen bg-gray-950 text-white font-sans">
@@ -64,7 +57,7 @@ const Layout = () => {
                 selectedIds={selectedIds}
                 onToggleSelection={toggleSelection}
                 onSelectAll={selectAll}
-                query={queryExplanation}
+                cypherQuery={cypherQuery}
             />
         </div>
     );

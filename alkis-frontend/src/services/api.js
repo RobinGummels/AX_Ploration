@@ -22,6 +22,7 @@ export const chatAPI = {
                 return {
                     final_answer: response.data.final_answer,
                     results: response.data.results,
+                    cypher_query: response.data.cypher_query,
                 };
             }
             else console.log("Databse not connected.")

@@ -95,6 +95,7 @@ export const useChat = () => {
     ]);
     const [isLoading, setIsLoading] = useState(false);
     const [buildings, setBuildings] = useState([]);
+    const [cypherQuery, setCypherQuery] = useState(null);
 
     const sendMessage = async (content) => {
         // Add user message
@@ -128,9 +129,12 @@ export const useChat = () => {
 
 
             // const response = await chatAPI.sendMessage(content);
-            const { final_answer: final_answer, results: results } = await chatAPI.sendMessage(content);
+            const { final_answer: final_answer, results: results, cypher_query: cypher_query } = await chatAPI.sendMessage(content);
             console.log("final_answer", final_answer);
+            console.log("cypher_query", cypher_query);
+            setCypherQuery(cypher_query);
             // console.log("results", results);
+
 
             const processedBuildings = parseBuildings(results);
             console.log("processedBuildings", processedBuildings);
@@ -160,5 +164,6 @@ export const useChat = () => {
         isLoading,
         sendMessage,
         buildings,
+        cypherQuery,
     };
 };
