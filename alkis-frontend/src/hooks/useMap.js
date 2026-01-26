@@ -61,7 +61,6 @@ export const useMap = (buildings, selectedIds) => {
             <strong>${building.name}</strong><br/>
             Area: ${Number(building.area).toLocaleString()} m²<br/>
             Floors: ${building.floors}<br/>
-            District: ${building.district}
           </div>
         `);
 

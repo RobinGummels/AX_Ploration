@@ -76,7 +76,6 @@ const parseBuildings = (results) => {
                 geometry,
                 area: item?.area ? Number(item.area) : 0,
                 floors: item?.floors_above ?? 0,
-                district: item?.post_code || '',
                 centroid,
             };
         } catch (error) {
