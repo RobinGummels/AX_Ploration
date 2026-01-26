@@ -13,7 +13,9 @@ export const useMap = (buildings, selectedIds) => {
         if (!mapRef.current || mapInstanceRef.current) return;
 
         // Initialize map
-        const map = L.map(mapRef.current).setView(MAP_CONFIG.center, MAP_CONFIG.zoom);
+        const map = L.map(mapRef.current, {
+            zoomControl: false // Disable default zoom controls
+        }).setView(MAP_CONFIG.center, MAP_CONFIG.zoom);
 
         // Add tile layer
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
