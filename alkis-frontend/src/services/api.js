@@ -17,14 +17,13 @@ export const chatAPI = {
         const healthCheckDB = await api.get('/health');
         if (healthCheckAPI.data.status == "online") {
             if (healthCheckDB.data.status == "healthy") {
-
                 if (stream === false) {
-                    const response = (await api.post('/query', { query: message, stream: stream })); //stream=T or F for results
-                    console.log("API response:", response.data);
+                    const response = (await api.post('/query', { query: message, stream: false })); //stream=T or F for results
                     //return (response.data.final_answer, response.data.results);
                     return {
                         final_answer: response.data.final_answer,
                         results: response.data.results,
+                        cypher_query: response.data.cypher_query,
                     };
                 }
                 else {
@@ -40,6 +39,7 @@ export const chatAPI = {
                     const decoder = new TextDecoder();
                     let finalAnswer = null;
                     let results = null;
+                    let cypher_query = null;
 
                     while (true) {
                         const { done, value } = await reader.read();
@@ -62,8 +62,10 @@ export const chatAPI = {
                                     } else if (parsed.type === 'final') {
                                         console.log('Final state:', parsed.state);
                                         console.log('Final answer:', parsed.state.final_answer);
+                                        console.log('Cypher query:', parsed.state.cypher_query);
                                         finalAnswer = parsed.state.final_answer;
                                         results = parsed.state.results;
+                                        cypher_query = parsed.state.cypher_query;
                                     } else if (parsed.type === 'error') {
                                         console.error('Error:', parsed.error);
                                     }
@@ -78,6 +80,7 @@ export const chatAPI = {
                     return {
                         final_answer: finalAnswer,
                         results: results,
+                        cypher_query: cypher_query,
                     };
                 }
             }
