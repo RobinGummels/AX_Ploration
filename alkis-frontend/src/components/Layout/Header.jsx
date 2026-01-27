@@ -129,7 +129,22 @@ const Header = ({ activeTab, onTabChange, buildings = [], selectedIds = [] }) =>
             >
                 <div className="space-y-4 text-gray-300">
                     <p>
-                        If you need help, feel free to contact us at: ...
+                        This website was designed to help navigate the ALKIS building catalog of Berlin. In the catalog, each building has a code corresponding to its functionality. But because it is a complex and tedious task to navigate the ALKIS building catalog, AX_Ploration provides a chatbot that answers any questions you might have.
+                    </p>
+                    <p>
+                        Overall, the website is split into three parts: the chat window on the left, the map and statistics tabs in the middle, and the results on the right. In the top row, you can find a download icon where you can export the building information of the buildings returned for a specfic question you asked, but this functionality also pops up later on again. Right next to it, the help icon must have led you right to this pop-up, where we have this neat little introduction to our website.
+                    </p>
+                    <p>
+                        Within the chat window, you can type any question about the buildings in Berlin, and the chatbot will answer it. Additionally, you can tick the box in the bottom left corner to show the thinking process behind the chatbot's answer. The answer then pops up right under your question.
+                    </p>
+                    <p>
+                        In the middle, the interactive map is the default tab. Here, you can AX_Plore Berlin at will, but note that as of now, AX_Ploration only includes information on the city districts Mitte, Pankow and Friedrichshain-Kreuzberg. After a query has been answered, the matched buildings are displayed on the map, and by clicking on them, further information is displayed in a pop-up. After switching to the statistics tab ...
+                    </p>
+                    <p>
+                        The right side shows the results of a query. At the top, you can select a sorting method for the results listed below. This includes: ... (say here after implemented). You can also select all buildings or reject your current selection, as well as export the building information of all selected buildings as a GeoJSON. Then, the cypher query is displayed to show you exactly how the chatbot interpreted your question - this is helpful if you are not sure whether your question was interpreted correctly. Of course, it would be best if you knew a bit of SQL to make sense of the query. Below the cypher query, all buildings that are matching your question and that were returned by the chatbot are listed with detailed information. You can explore these in detail here or in the map, whichever way you prefer.
+                    </p>
+                    <p>
+                        Have fun AX_Ploring! All the best, the team of AX_Ploration. :)
                     </p>
                 </div>
             </Modal>
