@@ -102,28 +102,17 @@ def extract_buildings_list(results: Any) -> List[Dict[str, Any]]:
 
 def update_results_structure(state: AgentState, filtered_buildings: List[Dict[str, Any]]) -> Any:
     """
-    Update results maintaining the original structure (array vs object).
+    Update results maintaining the structured format: [{"buildings": [...]}].
     
     Args:
         state: Current agent state
         filtered_buildings: Filtered list of buildings
         
     Returns:
-        Results in the same structure as original
+        Results in structured format [{"buildings": [...]}]
     """
-    original_results = state.get("results", [])
-    
-    if isinstance(original_results, list):
-        # Return as array
-        return filtered_buildings
-    elif isinstance(original_results, dict) and "buildings" in original_results:
-        # Return as object with updated buildings
-        updated_results = original_results.copy()
-        updated_results["buildings"] = filtered_buildings
-        return updated_results
-    else:
-        # Fallback to array
-        return filtered_buildings
+    # Always return in structured format
+    return [{"buildings": filtered_buildings}]
 
 
 def determine_point_filter_mode(query: str, spatial_filter_wkt: str) -> Dict[str, Any]:

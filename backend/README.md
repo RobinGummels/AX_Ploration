@@ -1,7 +1,7 @@
 # Description of AX_Ploration Backend
 
 ## Agent architecture
-![Image of the agent architecture](agent-architecture.png)
+![Image of the agent architecture](agent-architecture-new.png)
 
 ```mermaid
 flowchart LR
