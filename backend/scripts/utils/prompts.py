@@ -7,23 +7,32 @@ DATABASE_SCHEMA = get_schema_for_prompt()
 
 PROMPTS = {
     "identify_attributes": {
-        "system": """Du bist ein Experte für die Analyse von Anfragen zu ALKIS AX_Gebaeude Gebäudedaten.
+        "system": f"""You are an expert in analyzing queries about ALKIS AX_Gebaeude building data.
 
-Deine Aufgabe ist es, aus einer Benutzeranfrage zu identifizieren:
-1. Welche Gebäudeattribute werden gesucht?
-2. Wird eine spezifische Gebäudefunktion benötigt?
+Your task is to identify from a user query:
+1. Which building attributes are being searched for?
+2. Is a specific building function needed?
+3. Extract ONLY the building function-relevant parts (remove location, statistics, filters)
+4. Detect the query language (full language name, e.g., "German", "English", "French", etc.)
 
-Zur Auswahl stehen folgende Attribute, Relationen und Nodes einer Neo4j Aura Datenbank mit folgendem Schema. Wähle NUR aus diesen Attributen aus:
+Available attributes from Neo4j Aura database schema - choose ONLY from these:
 
 {DATABASE_SCHEMA}
 
-Antworte im JSON-Format:
+Respond in JSON format:
 {
     "attributes": ["list", "of", "attributes"],
     "needs_building_function": true/false,
-    "building_function_hint": "optionale Beschreibung der gesuchten Funktion"
-}""",
-        "user": "Analysiere diese Anfrage: {query}",
+    "building_function_query": "extracted terms regarding the building function (e.g., 'schools', 'Wohngebäude', 'hospitals')",
+    "query_language": "Full language name (e.g., 'German', 'English', 'French', etc.)"
+}
+
+Examples:
+- Query: "Wie viele Schulen gibt es in Pankow?" -> building_function_query: "Schulen", query_language: "German"
+- Query: "Show me hospitals with more than 3 floors" -> building_function_query: "hospitals", query_language: "English"
+- Query: "Liste alle Gebäude auf in denen Vertretungen ausländische Regierungen sitzen" -> building_function_query: "Gebäude mit Vertretungen ausländischer Regierungen", query_language: "German"
+""",
+        "user": "Analyze this query: {query}",
     },
     
     "cypher_district": {
@@ -47,17 +56,19 @@ Attribute: {attributes}
 Gebäudefunktionen (Codes): {building_functions}""",
     },
     "generate_answer": {
-        "system": """Du bist ein hilfreicher Assistent, der Ergebnisse von Gebäudedaten-Analysen erklärt.
+        "system": """You are a helpful assistant explaining building data analysis results.
 
-Regeln:
-- Antworte auf Deutsch
-- Sei präzise und informativ
-- Formatiere Zahlen lesbar (z.B. 1.234 statt 1234)
-- Wenn keine Ergebnisse gefunden wurden, erkläre das freundlich
-- Fasse große Ergebnismengen zusammen""",
-        "user": """Ursprüngliche Anfrage: {query}
+IMPORTANT: Respond in {language} as the user's query was in {language}.
 
-Gefundene Daten:
+Rules:
+- Be precise and informative
+- Format numbers readable (e.g., 1,234 instead of 1234)
+- If no results found, explain it friendly
+- Summarize large result sets
+- Maintain the query language in your response""",
+        "user": """Original query: {query}
+
+Found data:
 {results}
 
 Formuliere eine hilfreiche Antwort.""",

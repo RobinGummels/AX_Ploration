@@ -7,10 +7,12 @@ class AgentState(TypedDict):
     # Input
     query: str                                      # Original user query
     spatial_filter: Optional[str]                   # Optional WKT geometry for spatial filtering (EPSG:25833)
+    query_language: Optional[str]                   # Detected query language (e.g., "de", "en")
     
     # Attribute Identification
     attributes: List[str]                           # Identified building attributes (e.g., "floors", "function", "area")
     needs_building_function: bool                   # Whether building function lookup is needed
+    building_function_query: Optional[str]          # Extracted building function-relevant query for embedding search
     
     # Building Function Search
     building_functions: List[int]                   # Found building function codes (e.g., 1010, 2000)

@@ -89,10 +89,15 @@ def generate_answer(state: AgentState) -> Dict[str, Any]:
     if len(results) > 20:
         results_text += f"\n\n(Zeige 20 von {len(results)} Ergebnissen)"
     
+    # Get language information (full language name from LLM)
+    query_language = state.get("query_language", "German")
+    
     prompt = PROMPTS["generate_answer"]
     
     messages = [
-        {"role": "system", "content": prompt["system"]},
+        {"role": "system", "content": prompt["system"].format(
+            language=query_language
+        )},
         {"role": "user", "content": prompt["user"].format(
             query=query,
             results=results_text
@@ -104,7 +109,7 @@ def generate_answer(state: AgentState) -> Dict[str, Any]:
         
         return {
             "final_answer": answer,
-            "messages": [f"Generated answer for {len(results)} results"]
+            "messages": [f"Generated answer for {len(results)} results in {query_language}"]
         }
         
     except Exception as e:
