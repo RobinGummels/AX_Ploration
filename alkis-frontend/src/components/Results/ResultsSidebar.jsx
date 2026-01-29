@@ -19,11 +19,10 @@ const ResultsSidebar = ({
     drawnGeometry,
     loading = false
 }) => {
-    const [sortBy, setSortBy] = useState('distance');
+    const [sortBy, setSortBy] = useState('area');
     const [activeFilters, setActiveFilters] = useState([]);
 
     const sortOptions = [
-        { value: 'distance', label: 'Sort by Distance' },
         { value: 'area', label: 'Sort by Area' },
         { value: 'name', label: 'Sort by Name' },
         { value: 'floors', label: 'Sort by Floors' },
@@ -45,6 +44,24 @@ const ResultsSidebar = ({
     const handleClearAllFilters = () => {
         setActiveFilters([]);
     };
+
+    // Sort buildings based on selected sort option
+    const getSortedBuildings = () => {
+        const buildingsCopy = [...buildings];
+        
+        switch (sortBy) {
+            case 'area':
+                return buildingsCopy.sort((a, b) => b.area - a.area);
+            case 'name':
+                return buildingsCopy.sort((a, b) => a.name.localeCompare(b.name));
+            case 'floors':
+                return buildingsCopy.sort((a, b) => b.floors - a.floors);
+            default:
+                return buildingsCopy;
+        }
+    };
+
+    const sortedBuildings = getSortedBuildings();
 
     return (
         <div className="w-96 bg-gray-900 flex flex-col border-l border-gray-800">
@@ -116,8 +133,8 @@ const ResultsSidebar = ({
                         description="Try adjusting your search query"
                     />
                 ) : (
-                    // this is for building information from BuildingCard
-                    buildings.map((building) => (
+                    // Display sorted building list
+                    sortedBuildings.map((building) => (
                         <BuildingCard
                             key={building.id}
                             building={building}
