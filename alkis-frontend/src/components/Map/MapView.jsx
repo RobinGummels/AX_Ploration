@@ -1,12 +1,12 @@
-import React from 'react';
-import { ZoomIn, ZoomOut, Maximize2, Layers } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ZoomIn, ZoomOut, Maximize2, Layers, Pencil } from 'lucide-react';
 import { useMap } from '../../hooks/useMap';
 // import MapControls from './MapControls';
 
 // center panel with leaflet map
 
 // Inline MapControls component, since not using MapControls.jsx as of now
-const MapControls = ({ mapInstance, onToggleLayers }) => {
+const MapControls = ({ mapInstance, onToggleLayers, isDrawingEnabled, onToggleDrawing, onClearDrawing }) => {
     const handleZoomIn = () => {
         if (mapInstance) mapInstance.zoomIn();
     };
@@ -56,8 +56,8 @@ const MapControls = ({ mapInstance, onToggleLayers }) => {
     );
 };
 
-const MapView = ({ buildings, selectedIds }) => {
-    const { mapRef, mapInstance } = useMap(buildings, selectedIds);
+const MapView = ({ buildings, selectedIds, onDrawingChange }) => {
+    const { mapRef, mapInstance } = useMap(buildings, selectedIds, onDrawingChange);
 
     const handleToggleLayers = () => {
         console.log('Toggle layers');
@@ -81,7 +81,7 @@ const MapView = ({ buildings, selectedIds }) => {
             )}
 
             {/* Legend */}
-            <div className="absolute bottom-4 left-4 bg-white bg-opacity-95 p-3 rounded shadow-lg text-sm z-[1000]">
+            <div className="absolute bottom-5 right-5 bg-white bg-opacity-95 p-3 rounded shadow-lg text-sm z-[1000]">
                 <div className="font-semibold mb-2 text-gray-900">Legend</div>
                 <div className="flex items-center gap-2 mb-1">
                     <div className="w-4 h-4 bg-gray-400 border-2 border-gray-600" />

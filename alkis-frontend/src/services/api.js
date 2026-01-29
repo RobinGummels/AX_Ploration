@@ -11,14 +11,28 @@ const api = axios.create({
 });
 
 export const chatAPI = {
-    sendMessage: async (message, stream, onThinkingMessage) => {
+    sendMessage: async (messageOrPayload, stream, onThinkingMessage) => {
+        // Prepare payload for backend
+        // Handle both string messages (legacy) and payload objects (with spatial_filter geometry)
+        let payload;
+        if (typeof messageOrPayload === 'string') {
+            payload = { query: messageOrPayload, stream };
+        } else {
+            // Payload includes: { query, stream, spatial_filter? }
+            // spatial_filter contains WKT geometry in EPSG:25833 for spatial filtering
+            payload = messageOrPayload;
+        }
+
         const healthCheckAPI = await api.get('/');
         // console.log(healthCheckAPI);
         const healthCheckDB = await api.get('/health');
         if (healthCheckAPI.data.status == "online") {
             if (healthCheckDB.data.status == "healthy") {
-                if (stream === false) {
-                    const response = (await api.post('/query', { query: message, stream: false })); //stream=T or F for results
+                if (payload.stream === false) {
+                    // Send query to backend with optional spatial_filter
+                    // Backend receives: { query: string, stream: boolean, spatial_filter?: string (WKT) }
+                    // Backend returns: { final_answer, results, cypher_query }
+                    const response = (await api.post('/query', payload));
                     //return (response.data.final_answer, response.data.results);
                     return {
                         final_answer: response.data.final_answer,
@@ -32,7 +46,7 @@ export const chatAPI = {
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ query: message, stream: stream }),
+                        body: JSON.stringify(payload),
                     });
 
                     const reader = response.body.getReader();

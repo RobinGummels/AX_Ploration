@@ -11,7 +11,8 @@ import { useBuildings } from '../../hooks/useBuildings';
 
 const Layout = () => {
     const [activeTab, setActiveTab] = useState('map');
-    const { messages, isLoading, sendMessage, buildings: chatBuildings, showThinking, setShowThinking, thinkingMessages, cypherQuery } = useChat();
+    const [drawnGeometry, setDrawnGeometry] = useState(null);
+    const { messages, isLoading, sendMessage, buildings: chatBuildings, showThinking, setShowThinking, thinkingMessages, cypherQuery } = useChat(drawnGeometry);
     const {
         buildings,
         selectedIds,
@@ -23,6 +24,11 @@ const Layout = () => {
         setActiveTab(tab);
     };
 
+    // Receive geometry from useMap and store in Layout state
+    // This geometry will be passed to useChat for spatial filtering in queries
+    const handleDrawingChange = (geometry) => {
+        setDrawnGeometry(geometry);
+    };
 
     return (
         <div className="flex h-screen bg-gray-950 text-white font-sans">
@@ -34,6 +40,7 @@ const Layout = () => {
                 showThinking={showThinking}
                 onToggleThinking={setShowThinking}
                 thinkingMessages={thinkingMessages}
+                drawnGeometry={drawnGeometry}
             />
 
             {/* Center: Map/Statistics */}
@@ -47,7 +54,7 @@ const Layout = () => {
 
                 <div className="flex-1 overflow-hidden">
                     {activeTab === 'map' ? (
-                        <MapView buildings={buildings} selectedIds={selectedIds} />
+                        <MapView buildings={buildings} selectedIds={selectedIds} onDrawingChange={handleDrawingChange} />
                     ) : (
                         <StatisticsView buildings={buildings} />
                     )}
@@ -61,6 +68,7 @@ const Layout = () => {
                 onToggleSelection={toggleSelection}
                 onSelectAll={selectAll}
                 cypherQuery={cypherQuery}
+                drawnGeometry={drawnGeometry}
             />
         </div>
     );

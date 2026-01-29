@@ -5,7 +5,7 @@ import ChatInput from './ChatInput';
 // for left side, icon and header, chat window
 // chat history and input field
 
-const ChatSidebar = ({ messages, onSendMessage, isLoading, showThinking, onToggleThinking, thinkingMessages }) => {
+const ChatSidebar = ({ messages, onSendMessage, isLoading, showThinking, onToggleThinking, thinkingMessages, drawnGeometry }) => {
     const messagesEndRef = useRef(null);
     const thinkingEndRef = useRef(null);
 
@@ -40,6 +40,18 @@ const ChatSidebar = ({ messages, onSendMessage, isLoading, showThinking, onToggl
                     <div className="text-xs text-gray-400">Berlin Pilot Region</div>
                 </div>
             </div>
+
+            {/* Spatial Filter Status - Persistent */}
+            {drawnGeometry && drawnGeometry.features && drawnGeometry.features.length > 0 && (
+                <div className="px-4 py-3 border-b border-blue-500 bg-blue-900 bg-opacity-40">
+                    <div className="text-xs font-semibold text-blue-300 mb-1">✓ Spatial Filter Active</div>
+                    <div className="text-xs text-blue-200">
+                        {drawnGeometry.features[0].geometry.type === 'Point'
+                            ? '📍 Using marked point'
+                            : '🔷 Using drawn polygon'}
+                    </div>
+                </div>
+            )}
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">

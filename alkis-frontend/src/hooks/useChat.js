@@ -10,8 +10,9 @@ if (!proj4.defs('EPSG:25833')) {
     proj4.defs('EPSG:25833', '+proj=utm +zone=33 +ellps=GRS80 +datum=ETRS89 +units=m +no_defs');
 }
 
-// Define transformer: EPSG:25833 (UTM 33N meters) -> EPSG:4326 (lon/lat)
+// Define transformers: EPSG:25833 (UTM 33N meters) <-> EPSG:4326 (lon/lat)
 const toWgs84 = proj4('EPSG:25833', 'EPSG:4326');
+const fromWgs84 = proj4('EPSG:4326', 'EPSG:25833');
 
 // Recursively transform coordinates (Polygon / MultiPolygon)
 const transformCoordinates = (coords) => {
@@ -20,6 +21,44 @@ const transformCoordinates = (coords) => {
         return toWgs84.forward(coords); // [lon, lat]
     }
     return coords.map(transformCoordinates);
+};
+
+// Transform coordinates from WGS84 to UTM 33N for backend
+const transformCoordinatesToUtm = (coords) => {
+    if (!Array.isArray(coords)) return coords;
+    if (typeof coords[0] === 'number') {
+        return fromWgs84.forward(coords); // [x, y] in UTM
+    }
+    return coords.map(transformCoordinatesToUtm);
+};
+
+// Convert GeoJSON geometry to WKT format in EPSG:25833
+const geojsonToWkt = (geometry) => {
+    if (!geometry) return null;
+
+    const type = geometry.type;
+    const coords = geometry.coordinates;
+
+    if (!coords) return null;
+
+    // Transform coordinates from WGS84 to UTM 33N
+    const utmCoords = transformCoordinatesToUtm(coords);
+
+    switch (type) {
+        case 'Point':
+            return `POINT (${utmCoords[0]} ${utmCoords[1]})`;
+        
+        case 'Polygon':
+            const polyRings = utmCoords.map(ring => {
+                const ringCoords = ring.map(c => `${c[0]} ${c[1]}`).join(', ');
+                return `(${ringCoords})`;
+            }).join(', ');
+            return `POLYGON (${polyRings})`;
+        
+        default:
+            console.warn('Unsupported geometry type:', type);
+            return null;
+    }
 };
 
 // Normalize possible Feature/FeatureCollection to Geometry object and transform
@@ -85,7 +124,7 @@ const parseBuildings = (results) => {
     }).filter(Boolean);
 };
 
-export const useChat = () => {
+export const useChat = (drawnGeometry) => {
     const [messages, setMessages] = useState([
         {
             role: 'assistant',
@@ -130,21 +169,44 @@ export const useChat = () => {
             //uncomment when backend connected:
 
 
+            // Build query payload with optional spatial filter
+            const queryPayload = {
+                query: content,
+                stream: showThinking,
+            };
+
+            // Convert drawn geometry to WKT format
+            // Transform from GeoJSON (WGS84 - map coordinates)
+            // to WKT in EPSG:25833 (UTM 33N - backend coordinate system)
+            if (drawnGeometry && drawnGeometry.features && drawnGeometry.features.length > 0) {
+                const geometry = drawnGeometry.features[0].geometry;
+                const wktGeometry = geojsonToWkt(geometry);
+                if (wktGeometry) {
+                    queryPayload.spatial_filter = wktGeometry;
+                    console.log('Spatial filter WKT:', wktGeometry);
+                }
+            }
+
             // const response = await chatAPI.sendMessage(content);
             const { final_answer: final_answer, results: results, cypher_query: cypher_query } = await chatAPI.sendMessage(
-                content,
+                queryPayload,
                 showThinking,
                 (thinkingMsg) => setThinkingMessages(prev => [...prev, thinkingMsg])
             );
             console.log("final_answer", final_answer);
             console.log("cypher_query", cypher_query);
+            console.log("results", results);
             setCypherQuery(cypher_query);
-            // console.log("results", results);
 
-
-            const processedBuildings = parseBuildings(results);
-            console.log("processedBuildings", processedBuildings);
-            setBuildings(processedBuildings);
+            // Only process buildings if results exist
+            if (results) {
+                const processedBuildings = parseBuildings(results);
+                console.log("processedBuildings", processedBuildings);
+                setBuildings(processedBuildings);
+            } else {
+                console.warn("No results received from backend");
+                setBuildings([]);
+            }
 
             if (final_answer) {
                 setMessages(prev => [...prev, {

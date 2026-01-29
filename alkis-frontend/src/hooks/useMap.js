@@ -1,13 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
 import L from 'leaflet';
+import 'leaflet-draw/dist/leaflet.draw.css';
+import 'leaflet-draw';
 import { MAP_CONFIG } from '../utils/constants';
 
 // initializes leaflet map, renders building polygons and updates with changed selection 
+// also provides drawing tools for polygon/point selection
 
-export const useMap = (buildings, selectedIds) => {
+export const useMap = (buildings, selectedIds, onDrawingChange) => {
     const mapRef = useRef(null);
     const mapInstanceRef = useRef(null);
     const layersRef = useRef({});
+    const drawnItemsRef = useRef(null);
 
     useEffect(() => {
         if (!mapRef.current || mapInstanceRef.current) return;
@@ -25,6 +29,9 @@ export const useMap = (buildings, selectedIds) => {
         }).addTo(map);
 
         mapInstanceRef.current = map;
+
+        // Initialize drawing tools immediately after map creation
+        initializeDrawing(map);
 
         return () => {
             if (mapInstanceRef.current) {
@@ -77,5 +84,87 @@ export const useMap = (buildings, selectedIds) => {
         }
     }, [buildings, selectedIds]);
 
-    return { mapRef, mapInstance: mapInstanceRef.current };
+    const initializeDrawing = (map) => {
+        // Create feature group for drawn items
+        drawnItemsRef.current = new L.FeatureGroup();
+        map.addLayer(drawnItemsRef.current);
+
+        // Initialize Leaflet Draw
+        const drawControl = new L.Control.Draw({
+            position: 'bottomleft',
+            draw: {
+                polygon: true,
+                polyline: false,
+                rectangle: false,
+                circle: false,
+                marker: true,
+                circlemarker: false,
+            },
+            edit: {
+                featureGroup: drawnItemsRef.current,
+                remove: true,
+                edit: false,
+            },
+        });
+        map.addControl(drawControl);
+
+        // Handle drawing events
+        map.on('draw:created', handleDrawingCreated);
+        map.on('draw:edited', handleDrawingEdited);
+        map.on('draw:deleted', handleDrawingDeleted);
+
+        return drawControl;
+    };
+
+    const handleDrawingCreated = (e) => {
+        // User draws geometry on map
+        // Only allow one geometry at a time - clear previous ones
+        const layer = e.layer;
+        drawnItemsRef.current.clearLayers();
+        drawnItemsRef.current.addLayer(layer);
+        emitDrawingChange();
+    };
+
+    const handleDrawingEdited = () => {
+        // User edits existing geometry
+        emitDrawingChange();
+    };
+
+    const handleDrawingDeleted = () => {
+        // User deletes geometry
+        emitDrawingChange();
+    };
+
+    const emitDrawingChange = () => {
+        // Convert to GeoJSON (WGS84 coordinates)
+        // and pass it up to parent component (Layout) via callback
+        if (onDrawingChange && drawnItemsRef.current) {
+            const geojson = drawnItemsRef.current.toGeoJSON();
+            onDrawingChange(geojson);
+        }
+    };
+
+    const clearDrawing = () => {
+        if (drawnItemsRef.current) {
+            drawnItemsRef.current.clearLayers();
+            if (onDrawingChange) {
+                onDrawingChange(null);
+            }
+        }
+    };
+
+    const getDrawnGeometry = () => {
+        if (drawnItemsRef.current && drawnItemsRef.current.getLayers().length > 0) {
+            return drawnItemsRef.current.toGeoJSON();
+        }
+        return null;
+    };
+
+    return { 
+        mapRef, 
+        mapInstance: mapInstanceRef.current,
+        initializeDrawing,
+        clearDrawing,
+        getDrawnGeometry,
+    };
 };

@@ -16,6 +16,7 @@ const ResultsSidebar = ({
     onToggleSelection,
     onSelectAll,
     cypherQuery,
+    drawnGeometry,
     loading = false
 }) => {
     const [sortBy, setSortBy] = useState('distance');
