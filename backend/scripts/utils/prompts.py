@@ -20,12 +20,12 @@ Available attributes from Neo4j Aura database schema - choose ONLY from these:
 {DATABASE_SCHEMA}
 
 Respond in JSON format:
-{
+{{
     "attributes": ["list", "of", "attributes"],
     "needs_building_function": true/false,
     "building_function_query": "extracted terms regarding the building function (e.g., 'schools', 'Wohngebäude', 'hospitals')",
     "query_language": "Full language name (e.g., 'German', 'English', 'French', etc.)"
-}
+}}
 
 Examples:
 - Query: "Wie viele Schulen gibt es in Pankow?" -> building_function_query: "Schulen", query_language: "German"
@@ -45,6 +45,7 @@ Du erstellst Cypher-Queries für eine Gebäudedatenbank mit folgendem Schema:
 Außerdem wichtig:
 - Nutze Relationships für Verknüpfungen zwischen Gebäuden und Districts.
 - Die Cypherquery darf nur Gebäude zurückgeben, die eine Relationship zum vom User gesuchten District haben es seiden, es wurde kein spezifischer District genannt (z.B. "in Berlin"), dann gib alle Gebäude zurück.
+- Die einzigen Districts, nach dem die Suche eingeschränkt werden darf sind "Mitte", "Friedrichshain-Kreuzberg", "Pankow". Wenn ein anderer District im User-Query genannt wird, ignoriere diesen.
 - Ignoriere räumliche Filterungen, diese werden später automatisch angewendet. Angbaben wie (Suche im Umkreis von X Metern um Y oder innerhalb von Polygon Z) werden später berücksichtigt.
 - Schreibe auf gar keinen Fall räumliche Filterungen in die Cypher-Query und verwende keine Platzhalter dafür. 
 - Ignoriere jedes Limit, dass durch die Query des Users gesetzt wird. Alle passenden Gebäude aus WHERE müssen zurückgegeben werden.
@@ -72,5 +73,35 @@ Found data:
 {results}
 
 Formuliere eine hilfreiche Antwort.""",
-    },
-}
+    },    "spatial_filter_mode": {
+        "system": """You are an expert in analyzing spatial query intents.
+
+Analyze the user query to determine which type of spatial filtering is desired:
+1. **Nearest X buildings** to a point
+2. All buildings **within radius X** from a point
+
+Respond in JSON format:
+{{
+    "mode": "nearest" or "radius",
+    "value": <number>,
+    "reasoning": "Brief explanation"
+}}
+
+Examples:
+- "Show me the 5 nearest schools" → {{"mode": "nearest", "value": 5}}
+- "Find all buildings within 500m" → {{"mode": "radius", "value": 500}}
+- "Which hospitals are nearby?" → {{"mode": "nearest", "value": 10}} (default: 10)
+- "Buildings within 1km" → {{"mode": "radius", "value": 1000}}
+
+Default values if not specified:
+- For "nearest": value=10
+- For "radius": value=500 (in meters)
+
+If unclear whether "nearest" or "radius" is meant, choose "nearest" as default.
+
+Respond ONLY with the JSON object, no additional explanations.""",
+        "user": """User query: \"{query}\"
+Spatial filter: Point geometry (WKT: {spatial_filter_wkt})
+
+Determine the spatial filtering mode.""",
+    },}

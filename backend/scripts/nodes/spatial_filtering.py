@@ -18,6 +18,7 @@ from shapely.errors import ShapelyError
 
 from ..models import AgentState
 from ..utils.llm_client import llm_client
+from ..utils.prompts import PROMPTS
 
 
 def parse_building_geometry(building: Dict[str, Any]) -> Point:
@@ -126,36 +127,18 @@ def determine_point_filter_mode(query: str, spatial_filter_wkt: str) -> Dict[str
     Returns:
         Dict with 'mode' ('nearest' or 'radius') and 'value' (number)
     """
-    prompt = f"""Analysiere die folgende Benutzeranfrage und bestimme, welche Art von räumlicher Filterung gewünscht ist.
-
-Benutzeranfrage: "{query}"
-Räumlicher Filter: Punkt-Geometrie (WKT: {spatial_filter_wkt})
-
-Der Benutzer möchte entweder:
-1. Die **nächstgelegenen X Gebäude** zu diesem Punkt finden
-2. Alle Gebäude **innerhalb eines Radius X** um diesen Punkt finden
-
-Antworte im JSON-Format:
-{{
-    "mode": "nearest" oder "radius",
-    "value": <Zahl>,
-    "reasoning": "Kurze Erklärung"
-}}
-
-Beispiele:
-- "Zeige mir die 5 nächsten Schulen" → {{"mode": "nearest", "value": 5}}
-- "Finde alle Gebäude im Umkreis von 500m" → {{"mode": "radius", "value": 500}}
-- "Welche Krankenhäuser sind in der Nähe?" → {{"mode": "nearest", "value": 10}} (Standard: 10)
-- "Gebäude innerhalb von 1km" → {{"mode": "radius", "value": 1000}}
-
-Wenn keine spezifische Zahl genannt wird:
-- Für "nächste/nearest": Verwende value=10 als Standard
-- Für "Umkreis/radius": Verwende value=500 als Standard (in Metern)
-
-Antworte NUR mit dem JSON-Objekt, keine zusätzlichen Erklärungen."""
+    prompt = PROMPTS["spatial_filter_mode"]
+    
+    messages = [
+        {"role": "system", "content": prompt["system"]},
+        {"role": "user", "content": prompt["user"].format(
+            query=query,
+            spatial_filter_wkt=spatial_filter_wkt
+        )}
+    ]
 
     try:
-        response = llm_client.chat_completion_json([{"role": "user", "content": prompt}], temperature=0)
+        response = llm_client.chat_completion_json(messages, temperature=0)
         
         mode = response.get("mode", "nearest")
         value = response.get("value", 10 if mode == "nearest" else 500)

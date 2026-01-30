@@ -1,6 +1,6 @@
 """Node for executing Cypher queries against Neo4j."""
 
-from typing import Dict, Any, List
+from typing import Dict, Any
 
 from ..models import AgentState
 from ..utils.neo4j_client import neo4j_client
