@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatArea, formatDistance } from '../../utils/formatters';
+import { formatArea, formatFloors } from '../../utils/formatters';
 
 // displays a buildings information: name, area, distance, floors
 
@@ -30,15 +30,15 @@ const BuildingCard = ({ building, isSelected, onToggle }) => {
             <div className="space-y-1 text-xs">
                 <div className="flex items-center gap-2">
                     <span className="text-gray-400">📐</span>
-                    <span>{formatArea(building.area)}</span>
+                    {building.area !== 0 ? (<span>{formatArea(building.area)}</span>) : (<span>-</span>)}
                 </div>
-                <div className="flex items-center gap-2">
+                {/* <div className="flex items-center gap-2">
                     <span className="text-gray-400">📊</span>
                     <span>{building.district}</span>
-                </div>
+                </div> */}
                 <div className="flex items-center gap-2">
                     <span className="text-gray-400">🏢</span>
-                    <span>{building.floors} floors</span>
+                    {building.floors !== 0 ? (<span>{formatFloors(building.floors)}</span>) : (<span>-</span>)}
                 </div>
             </div>
         </div>
