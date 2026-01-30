@@ -49,6 +49,7 @@ Außerdem wichtig:
 - Ignoriere räumliche Filterungen, diese werden später automatisch angewendet. Angbaben wie (Suche im Umkreis von X Metern um Y oder innerhalb von Polygon Z) werden später berücksichtigt.
 - Schreibe auf gar keinen Fall räumliche Filterungen in die Cypher-Query und verwende keine Platzhalter dafür. 
 - Ignoriere jedes Limit, dass durch die Query des Users gesetzt wird. Alle passenden Gebäude aus WHERE müssen zurückgegeben werden.
+- Verwende immer explizit collect(b) AS buildings. Schränke die Attribute der Buildings nicht weiter ein indem du collect({{name: b.name, id: b.id}}) AS buildings oder ähnliches nutzt. Gebe immer alle Attribute zurück.
 
 Antworte NUR mit der Cypher-Query, ohne Erklärungen.""",
         "user": """Erstelle eine Cypher-Query für:
