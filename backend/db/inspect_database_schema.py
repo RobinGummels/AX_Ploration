@@ -11,7 +11,6 @@ This script provides detailed information about:
 import os
 from dotenv import load_dotenv
 from neo4j import GraphDatabase
-import json
 
 
 def load_config():
@@ -137,7 +136,7 @@ def main():
             # Get sample nodes
             samples = get_sample_nodes(session, label, limit=2)
             if samples:
-                print(f"\n    Sample nodes:")
+                print("\n    Sample nodes:")
                 for i, sample in enumerate(samples, 1):
                     print(f"\n    Sample {i}:")
                     for key, value in sample['properties'].items():

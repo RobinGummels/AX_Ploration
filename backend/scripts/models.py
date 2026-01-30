@@ -7,27 +7,26 @@ class AgentState(TypedDict):
     # Input
     query: str                                      # Original user query
     spatial_filter: Optional[str]                   # Optional WKT geometry for spatial filtering (EPSG:25833)
+    query_language: Optional[str]                   # Detected query language (e.g., "de", "en")
     
     # Attribute Identification
     attributes: List[str]                           # Identified building attributes (e.g., "floors", "function", "area")
     needs_building_function: bool                   # Whether building function lookup is needed
+    building_function_query: Optional[str]          # Extracted building function-relevant query for embedding search
     
     # Building Function Search
     building_functions: List[int]                   # Found building function codes (e.g., 1010, 2000)
     building_function_names: List[str]              # Function names (e.g., "Wohnhaus", "Wohngebäude")
     building_function_descriptions: List[str]       # Full descriptions
     
-    # Query Interpretation
-    query_type: str                                 # "district" | "nearby" | "custom_area" | "statistics"
-    
-    # Cypher Generation
+    # Cypher Generation (always district query type)
     cypher_query: str                               # Generated Cypher query
     
-    # Data Retrieval
-    results: List[Dict[str, Any]]                   # Raw data from Neo4j
+    # Data Retrieval & Statistics
+    results: List[Dict[str, Any]]                   # Results with structure: [{"buildings": [...], "statistics": {...}}]
     
     # Spatial Processing (optional)
-    spatial_comparison: Optional[Dict[str, Any]]    # Results from spatial comparison
+    spatial_comparison: Optional[Dict[str, Any]]    # Results from spatial filtering metadata
     
     # Output
     final_answer: str                               # Final formatted answer for user

@@ -9,7 +9,6 @@ a schema template file that can be imported by the prompts module.
 """
 
 import sys
-import os
 import json
 from pathlib import Path
 from typing import Dict, Any, List
@@ -199,14 +198,14 @@ def save_schema_template(output_path: str = None):
     else:
         output_path = Path(output_path)
     
-    print(f"Querying Neo4j database for schema information...")
+    print("Querying Neo4j database for schema information...")
     
     # Generate schema components
     schema_text = generate_schema_text()
     schema_dict = generate_schema_dict()
     hints = generate_prompt_hints()
     
-    print(f"\nFound:")
+    print("\nFound:")
     print(f"  - {len(schema_dict['nodes'])} node labels")
     print(f"  - {len(schema_dict['relationships'])} relationship types")
     print(f"  - {len(hints)} important hints")
@@ -269,8 +268,8 @@ def get_schema_dict() -> dict:
         f.write(content)
     
     print(f"\n✓ Schema template saved to: {output_path}")
-    print(f"\nYou can now import it in prompts.py:")
-    print(f"  from .schema_template import get_schema_for_prompt")
+    print("\nYou can now import it in prompts.py:")
+    print("  from .schema_template import get_schema_for_prompt")
     
     return output_path
 

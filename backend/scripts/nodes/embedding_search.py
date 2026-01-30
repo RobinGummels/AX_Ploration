@@ -32,7 +32,7 @@ def embedding_search(state: AgentState) -> Dict[str, Any]:
     """
     Node: Search for matching building functions using embeddings.
     
-    Creates an embedding of the user's building function hint
+    Creates an embedding of the extracted building function query
     and searches for similar building functions in Neo4j.
     Falls back to basic text search if vector index is not available.
     
@@ -44,13 +44,14 @@ def embedding_search(state: AgentState) -> Dict[str, Any]:
     - "threshold" method: Returns all results above score threshold (default: 0.6)
     
     Args:
-        state: Current agent state with building function hint
+        state: Current agent state with 'building_function_query'
         
     Returns:
         Dict with updates for 'building_functions', 'building_function_names', 
         'building_function_descriptions', and 'building_function_scores'
     """
-    query = state["query"]
+    # Use extracted building function query instead of full query
+    building_function_query = state.get("building_function_query", state["query"])
     
     # Determine which embedding model is being used
     use_large_model = "large" in OPENAI_EMBEDDING_MODEL.lower()
@@ -60,7 +61,7 @@ def embedding_search(state: AgentState) -> Dict[str, Any]:
     
     try:
         # First try vector similarity search
-        embedding = llm_client.create_embedding(query)
+        embedding = llm_client.create_embedding(building_function_query)
         
         results = neo4j_client.similarity_search(
             embedding=embedding,
@@ -114,17 +115,14 @@ def embedding_search(state: AgentState) -> Dict[str, Any]:
         
         # Check if it's a "no vector index" error - use fallback, but keep the error message
         if "no such vector" in error_msg.lower() or "vector schema index" in error_msg.lower() or "index" in error_msg.lower():
-            fallback_result = _fallback_function_search(query)
+            fallback_result = _fallback_function_search(building_function_query)
             fallback_result["messages"].append(f"Vector search failed (index): {error_msg}")
             return fallback_result
         
         # For other errors, still try fallback but log the error
-        fallback_result = _fallback_function_search(query)
+        fallback_result = _fallback_function_search(building_function_query)
         fallback_result["messages"].append(f"Vector search failed: {error_msg}")
         return fallback_result
-    
-    # No results from vector search, try fallback
-    return _fallback_function_search(query)
 
 
 def _filter_results(results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:

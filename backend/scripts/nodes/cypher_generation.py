@@ -73,12 +73,3 @@ def generate_cypher_district(state: AgentState) -> Dict[str, Any]:
     (Pankow, Mitte, Friedrichshain-Kreuzberg, etc.)
     """
     return _generate_cypher(state, "cypher_district")
-
-
-def generate_cypher_stats(state: AgentState) -> Dict[str, Any]:
-    """
-    Node: Generate Cypher for statistical queries.
-    
-    Generates aggregation queries (count, avg, sum, etc.)
-    """
-    return _generate_cypher(state, "cypher_statistics")
