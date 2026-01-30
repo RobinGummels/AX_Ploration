@@ -1,43 +1,38 @@
 import React from 'react';
 import MetricCard from './MetricCard';
 import StatChart from './StatChart';
-import { formatArea } from '../../utils/formatters';
+import { formatArea, formatFloors } from '../../utils/formatters';
 
 // statistics tab with metrics, charts 
 
-const StatisticsView = ({ buildings }) => {
-    const totalBuildings = buildings.length;
-    const avgArea = buildings.length > 0
-        ? Math.round(buildings.reduce((sum, b) => sum + b.area, 0) / buildings.length)
-        : 0;
-    const avgFloors = buildings.length > 0
-        ? (buildings.reduce((sum, b) => sum + b.floors, 0) / buildings.length).toFixed(1)
-        : 0;
-    const uniqueDistricts = new Set(buildings.map(b => b.district)).size;
-
-    const districtCounts = buildings.reduce((acc, building) => {
-        acc[building.district] = (acc[building.district] || 0) + 1;
-        return acc;
-    }, {});
-
-    // Prepare data for chart
-    const chartData = Object.entries(districtCounts).map(([district, count]) => ({
-        district,
-        count
-    }));
+const StatisticsView = ({ statistics }) => {
+    const area_max = statistics?.area_max || "-";
+    const area_mean = statistics?.area_mean || "-";
+    const area_min = statistics?.area_min || "-";
+    const building_count = statistics?.building_count || "-";
+    const floors_above_max = statistics?.floors_above_max || "-";
+    const floors_above_mean = statistics?.floors_above_mean || "-";
+    const floors_above_min = statistics?.floors_above_min || "-";
+    const house_number_min = statistics?.house_number_min || "-";
+    const house_number_max = statistics?.house_number_max || "-";
 
     return (
         <div className="w-full h-full bg-gray-900 p-6 overflow-y-auto">
             <h2 className="text-white text-2xl font-bold mb-6">Statistics</h2>
 
             <div className="grid grid-cols-2 gap-4 mb-6">
-                <MetricCard label="Total Buildings" value={totalBuildings} />
-                <MetricCard label="Average Area" value={formatArea(avgArea)} />
-                <MetricCard label="Average Floors" value={avgFloors} />
-                <MetricCard label="Districts Covered" value={uniqueDistricts} />
+                <MetricCard label="Total Buildings" value={building_count} />
+                {area_mean !== "-" ? <MetricCard label="Average Area" value={formatArea(area_mean)} /> : <MetricCard label="Average Area" value={area_mean} />}
+                {area_min !== "-" ? <MetricCard label="Min. Area" value={formatArea(area_min)} /> : <MetricCard label="Min. Area" value={area_min} />}
+                {area_max !== "-" ? <MetricCard label="Max. Area" value={formatArea(area_max)} /> : <MetricCard label="Max. Area" value={area_max} />} 
+                {floors_above_min !== "-" ? <MetricCard label="Min. Floors" value={formatFloors(floors_above_min)} /> : <MetricCard label="Min. Floors" value={floors_above_min} />}
+                {floors_above_max !== "-" ? <MetricCard label="Max. Floors" value={formatFloors(floors_above_max)} /> : <MetricCard label="Max. Floors" value={floors_above_max} />}
+                {floors_above_mean !== "-" ? <MetricCard label="Average Floors" value={formatFloors(floors_above_mean)} /> : <MetricCard label="Average Floors" value={floors_above_mean} />}
+                <MetricCard label="Min. House Number" value={house_number_min} />
+                <MetricCard label="Max. House Number" value={house_number_max} />
             </div>
 
-            {/* Chart */}
+            {/* Chart
             {buildings.length > 0 && (
                 <div className="mb-4">
                     <StatChart
@@ -76,7 +71,7 @@ const StatisticsView = ({ buildings }) => {
                         </div>
                     ))}
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };

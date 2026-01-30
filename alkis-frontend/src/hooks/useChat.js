@@ -136,6 +136,7 @@ export const useChat = (drawnGeometry) => {
     const [showThinking, setShowThinking] = useState(false);
     const [thinkingMessages, setThinkingMessages] = useState([]);
     const [cypherQuery, setCypherQuery] = useState(null);
+    const [statistics, setStatistics] = useState(null);
 
     const sendMessage = async (content) => {
         // Add user message
@@ -188,7 +189,7 @@ export const useChat = (drawnGeometry) => {
             }
 
             // const response = await chatAPI.sendMessage(content);
-            const { final_answer: final_answer, results: results, cypher_query: cypher_query } = await chatAPI.sendMessage(
+            const { final_answer: final_answer, results: results, cypher_query: cypher_query, } = await chatAPI.sendMessage(
                 queryPayload,
                 showThinking,
                 (thinkingMsg) => setThinkingMessages(prev => [...prev, thinkingMsg])
@@ -196,7 +197,9 @@ export const useChat = (drawnGeometry) => {
             console.log("final_answer", final_answer);
             console.log("cypher_query", cypher_query);
             console.log("results", results);
+            console.log("statistics", results[0].statistics);
             setCypherQuery(cypher_query);
+            setStatistics(results[0].statistics);
 
             // Only process buildings if results exist
             if (results) {
@@ -236,5 +239,6 @@ export const useChat = (drawnGeometry) => {
         setShowThinking,
         thinkingMessages,
         cypherQuery,
+        statistics,
     };
 };

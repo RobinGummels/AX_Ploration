@@ -12,7 +12,7 @@ import { useBuildings } from '../../hooks/useBuildings';
 const Layout = () => {
     const [activeTab, setActiveTab] = useState('map');
     const [drawnGeometry, setDrawnGeometry] = useState(null);
-    const { messages, isLoading, sendMessage, buildings: chatBuildings, showThinking, setShowThinking, thinkingMessages, cypherQuery } = useChat(drawnGeometry);
+    const { messages, isLoading, sendMessage, buildings: chatBuildings, showThinking, setShowThinking, thinkingMessages, cypherQuery, statistics } = useChat(drawnGeometry);
     const {
         buildings,
         selectedIds,
@@ -56,7 +56,7 @@ const Layout = () => {
                     {activeTab === 'map' ? (
                         <MapView buildings={buildings} selectedIds={selectedIds} onDrawingChange={handleDrawingChange} />
                     ) : (
-                        <StatisticsView buildings={buildings} />
+                        <StatisticsView statistics={statistics} />
                     )}
                 </div>
             </div>
