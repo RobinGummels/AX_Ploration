@@ -79,9 +79,9 @@ const ResultsSidebar = ({
                         options={sortOptions}
                         className="flex-1"
                     />
-                    <button className="bg-gray-800 p-2 rounded hover:bg-gray-700">
+                    {/* <button className="bg-gray-800 p-2 rounded hover:bg-gray-700">
                         <List className="w-4 h-4" />
-                    </button>
+                    </button> */}
                 </div>
 
                 <button
