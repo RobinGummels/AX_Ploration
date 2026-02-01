@@ -13,6 +13,8 @@ export const useMap = (buildings, selectedIds, onDrawingChange) => {
     const layersRef = useRef({});
     const drawnItemsRef = useRef(null);
     const hasZoomedToBuildings = useRef(false);
+    const tileLayersRef = useRef({ street: null, satellite: null });
+    const [activeLayer, setActiveLayer] = useState('street');
 
     useEffect(() => {
         if (!mapRef.current || mapInstanceRef.current) return;
@@ -22,13 +24,22 @@ export const useMap = (buildings, selectedIds, onDrawingChange) => {
             zoomControl: false // Disable default zoom controls
         }).setView(MAP_CONFIG.center, MAP_CONFIG.zoom);
 
-        // Add tile layer
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        // Add street tile layer (default)
+        const streetLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
             subdomains: 'abcd',
             maxZoom: MAP_CONFIG.maxZoom,
             minZoom: MAP_CONFIG.minZoom,
         }).addTo(map);
+
+        // Create satellite layer (not added by default)
+        const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+            maxZoom: MAP_CONFIG.maxZoom,
+            minZoom: MAP_CONFIG.minZoom,
+        });
+
+        tileLayersRef.current = { street: streetLayer, satellite: satelliteLayer };
 
         mapInstanceRef.current = map;
 
@@ -171,6 +182,28 @@ export const useMap = (buildings, selectedIds, onDrawingChange) => {
         }
     };
 
+    const applyLayer = (layerKey) => {
+        if (!mapInstanceRef.current) return;
+        if (!tileLayersRef.current[layerKey]) return;
+
+        const currentTileLayer = tileLayersRef.current[activeLayer];
+        const nextTileLayer = tileLayersRef.current[layerKey];
+
+        if (currentTileLayer) {
+            mapInstanceRef.current.removeLayer(currentTileLayer);
+        }
+        if (nextTileLayer) {
+            mapInstanceRef.current.addLayer(nextTileLayer);
+        }
+
+        setActiveLayer(layerKey);
+    };
+
+    const toggleLayer = () => {
+        const newLayer = activeLayer === 'street' ? 'satellite' : 'street';
+        applyLayer(newLayer);
+    };
+
     return {
         mapRef,
         mapInstance: mapInstanceRef.current,
@@ -178,5 +211,8 @@ export const useMap = (buildings, selectedIds, onDrawingChange) => {
         clearDrawing,
         getDrawnGeometry,
         zoomToBuilding,
+        toggleLayer,
+        applyLayer,
+        activeLayer,
     };
 };

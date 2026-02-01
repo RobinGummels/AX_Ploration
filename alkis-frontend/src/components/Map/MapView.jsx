@@ -25,6 +25,13 @@ const MapControls = ({ mapInstance, onToggleLayers, isDrawingEnabled, onToggleDr
     return (
         <div className="absolute top-4 right-4 flex flex-col gap-2 z-[1000]">
             <button
+                onClick={onToggleLayers}
+                className="bg-white hover:bg-gray-100 p-2 rounded shadow-lg"
+                title="Layers"
+            >
+                <Layers className="w-5 h-5 text-gray-700" />
+            </button>
+            <button
                 onClick={handleZoomIn}
                 className="bg-white hover:bg-gray-100 p-2 rounded shadow-lg"
                 title="Zoom In"
@@ -38,27 +45,21 @@ const MapControls = ({ mapInstance, onToggleLayers, isDrawingEnabled, onToggleDr
             >
                 <ZoomOut className="w-5 h-5 text-gray-700" />
             </button>
-            <button
+            {/* <button
                 onClick={handleFitBounds}
                 className="bg-white hover:bg-gray-100 p-2 rounded shadow-lg"
                 title="Fit to Bounds"
             >
                 <Maximize2 className="w-5 h-5 text-gray-700" />
-            </button>
-            <button
-                onClick={onToggleLayers}
-                className="bg-white hover:bg-gray-100 p-2 rounded shadow-lg"
-                title="Toggle Layers"
-            >
-                <Layers className="w-5 h-5 text-gray-700" />
-            </button>
+            </button> */}
         </div>
     );
 };
 
 const MapView = ({ buildings, selectedIds, onDrawingChange, onMapReady }) => {
-    const { mapRef, mapInstance, zoomToBuilding } = useMap(buildings, selectedIds, onDrawingChange);
+    const { mapRef, mapInstance, zoomToBuilding, applyLayer, activeLayer } = useMap(buildings, selectedIds, onDrawingChange);
     const mapReadyCalledRef = React.useRef(false);
+    const [showLayerMenu, setShowLayerMenu] = React.useState(false);
 
     React.useEffect(() => {
         if (mapInstance && onMapReady && !mapReadyCalledRef.current) {
@@ -67,25 +68,41 @@ const MapView = ({ buildings, selectedIds, onDrawingChange, onMapReady }) => {
         }
     }, [mapInstance, onMapReady, zoomToBuilding]);
 
-    const handleToggleLayers = () => {
-        console.log('Toggle layers');
-        /* Implement layer toggle logic
-        * could be for showing different stuff on the map, can also be deleted if not 
-        * necessary
-        */
-
-    };
-
     return (
         <div className="relative w-full h-full">
             <div ref={mapRef} className="w-full h-full" />
 
             {/* Map Controls */}
             {mapInstance && (
-                <MapControls
-                    mapInstance={mapInstance}
-                    onToggleLayers={handleToggleLayers}
-                />
+                <>
+                    <MapControls
+                        mapInstance={mapInstance}
+                        onToggleLayers={() => setShowLayerMenu((prev) => !prev)}
+                    />
+                    {showLayerMenu && (
+                        <div className="absolute top-4 right-16 bg-white rounded shadow-lg p-3 text-sm z-[1001]">
+                            <div className="font-semibold text-gray-900 mb-2">Layer</div>
+                            <label className="flex items-center gap-2 text-gray-900 mb-1 cursor-pointer">
+                                <input
+                                    type="radio"
+                                    name="base-layer"
+                                    checked={activeLayer === 'street'}
+                                    onChange={() => applyLayer('street')}
+                                />
+                                Street
+                            </label>
+                            <label className="flex items-center gap-2 text-gray-900 cursor-pointer">
+                                <input
+                                    type="radio"
+                                    name="base-layer"
+                                    checked={activeLayer === 'satellite'}
+                                    onChange={() => applyLayer('satellite')}
+                                />
+                                Satellite
+                            </label>
+                        </div>
+                    )}
+                </>
             )}
 
             {/* Legend */}
