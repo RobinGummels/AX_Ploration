@@ -12,6 +12,7 @@ export const useMap = (buildings, selectedIds, onDrawingChange) => {
     const mapInstanceRef = useRef(null);
     const layersRef = useRef({});
     const drawnItemsRef = useRef(null);
+    const hasZoomedToBuildings = useRef(false);
 
     useEffect(() => {
         if (!mapRef.current || mapInstanceRef.current) return;
@@ -78,10 +79,11 @@ export const useMap = (buildings, selectedIds, onDrawingChange) => {
             }
         });
 
-        // Fit bounds to show all buildings
-        if (buildings.length > 0) {
+        // Fit bounds to show all buildings only on first load
+        if (buildings.length > 0 && !hasZoomedToBuildings.current) {
             const group = L.featureGroup(Object.values(layersRef.current));
             mapInstanceRef.current.fitBounds(group.getBounds());
+            hasZoomedToBuildings.current = true;
         }
     }, [buildings, selectedIds]);
 
@@ -161,11 +163,20 @@ export const useMap = (buildings, selectedIds, onDrawingChange) => {
         return null;
     };
 
+    const zoomToBuilding = (buildingId) => {
+        if (layersRef.current[buildingId] && mapInstanceRef.current) {
+            const layer = layersRef.current[buildingId];
+            const bounds = layer.getBounds();
+            mapInstanceRef.current.fitBounds(bounds, { padding: [50, 50] });
+        }
+    };
+
     return {
         mapRef,
         mapInstance: mapInstanceRef.current,
         initializeDrawing,
         clearDrawing,
         getDrawnGeometry,
+        zoomToBuilding,
     };
 };

@@ -17,7 +17,8 @@ const ResultsSidebar = ({
     onSelectAll,
     cypherQuery,
     drawnGeometry,
-    loading = false
+    loading = false,
+    mapTools = null
 }) => {
     const [sortBy, setSortBy] = useState('area');
     const [activeFilters, setActiveFilters] = useState([]);
@@ -140,6 +141,7 @@ const ResultsSidebar = ({
                             building={building}
                             isSelected={selectedIds.includes(building.id)}
                             onToggle={onToggleSelection}
+                            onZoom={mapTools?.zoomToBuilding}
                         />
                     ))
                 )}

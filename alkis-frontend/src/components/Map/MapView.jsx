@@ -56,8 +56,16 @@ const MapControls = ({ mapInstance, onToggleLayers, isDrawingEnabled, onToggleDr
     );
 };
 
-const MapView = ({ buildings, selectedIds, onDrawingChange }) => {
-    const { mapRef, mapInstance } = useMap(buildings, selectedIds, onDrawingChange);
+const MapView = ({ buildings, selectedIds, onDrawingChange, onMapReady }) => {
+    const { mapRef, mapInstance, zoomToBuilding } = useMap(buildings, selectedIds, onDrawingChange);
+    const mapReadyCalledRef = React.useRef(false);
+
+    React.useEffect(() => {
+        if (mapInstance && onMapReady && !mapReadyCalledRef.current) {
+            onMapReady({ mapInstance, zoomToBuilding });
+            mapReadyCalledRef.current = true;
+        }
+    }, [mapInstance, onMapReady, zoomToBuilding]);
 
     const handleToggleLayers = () => {
         console.log('Toggle layers');

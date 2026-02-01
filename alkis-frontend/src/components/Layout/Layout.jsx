@@ -12,6 +12,7 @@ import { useBuildings } from '../../hooks/useBuildings';
 const Layout = () => {
     const [activeTab, setActiveTab] = useState('map');
     const [drawnGeometry, setDrawnGeometry] = useState(null);
+    const [mapTools, setMapTools] = useState(null);
     const { messages, isLoading, sendMessage, buildings: chatBuildings, showThinking, setShowThinking, thinkingMessages, cypherQuery, statistics } = useChat(drawnGeometry);
     const {
         buildings,
@@ -28,6 +29,10 @@ const Layout = () => {
     // This geometry will be passed to useChat for spatial filtering in queries
     const handleDrawingChange = (geometry) => {
         setDrawnGeometry(geometry);
+    };
+
+    const handleMapReady = (tools) => {
+        setMapTools(tools);
     };
 
     return (
@@ -54,7 +59,7 @@ const Layout = () => {
 
                 <div className="flex-1 overflow-hidden">
                     {activeTab === 'map' ? (
-                        <MapView buildings={buildings} selectedIds={selectedIds} onDrawingChange={handleDrawingChange} />
+                        <MapView buildings={buildings} selectedIds={selectedIds} onDrawingChange={handleDrawingChange} onMapReady={handleMapReady} />
                     ) : (
                         <StatisticsView statistics={statistics} />
                     )}
@@ -69,6 +74,7 @@ const Layout = () => {
                 onSelectAll={selectAll}
                 cypherQuery={cypherQuery}
                 drawnGeometry={drawnGeometry}
+                mapTools={mapTools}
             />
         </div>
     );
