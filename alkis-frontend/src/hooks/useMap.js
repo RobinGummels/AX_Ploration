@@ -22,8 +22,9 @@ export const useMap = (buildings, selectedIds, onDrawingChange) => {
         }).setView(MAP_CONFIG.center, MAP_CONFIG.zoom);
 
         // Add tile layer
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors',
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
             maxZoom: MAP_CONFIG.maxZoom,
             minZoom: MAP_CONFIG.minZoom,
         }).addTo(map);
@@ -58,9 +59,9 @@ export const useMap = (buildings, selectedIds, onDrawingChange) => {
                 // Let Leaflet handle GeoJSON coordinate order (lon/lat)
                 const layer = L.geoJSON(building.geometry, {
                     style: () => ({
-                        color: isSelected ? '#3b82f6' : '#6b7280',
-                        fillColor: isSelected ? '#1e40af' : '#374151',
-                        fillOpacity: 0.6,
+                        color: isSelected ? '#eab308' : '#dc2626',
+                        fillColor: isSelected ? '#fcd34d' : '#ef4444',
+                        fillOpacity: 0.7,
                         weight: 2,
                     })
                 }).addTo(mapInstanceRef.current);
@@ -160,8 +161,8 @@ export const useMap = (buildings, selectedIds, onDrawingChange) => {
         return null;
     };
 
-    return { 
-        mapRef, 
+    return {
+        mapRef,
         mapInstance: mapInstanceRef.current,
         initializeDrawing,
         clearDrawing,

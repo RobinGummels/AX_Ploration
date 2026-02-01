@@ -85,11 +85,11 @@ const MapView = ({ buildings, selectedIds }) => {
             <div className="absolute bottom-4 left-4 bg-white bg-opacity-95 p-3 rounded shadow-lg text-sm z-[1000]">
                 <div className="font-semibold mb-2 text-gray-900">Legend</div>
                 <div className="flex items-center gap-2 mb-1">
-                    <div className="w-4 h-4 bg-gray-400 border-2 border-gray-600" />
-                    <span className="text-gray-900">Building polygons</span>
+                    <div className="w-4 h-4 bg-red-500 border-2 border-red-600" />
+                    <span className="text-gray-900">Buildings</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-blue-700 border-2 border-blue-400" />
+                    <div className="w-4 h-4 bg-yellow-400 border-2 border-yellow-600" />
                     <span className="text-gray-900">Selected</span>
                 </div>
             </div>
