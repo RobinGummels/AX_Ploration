@@ -376,13 +376,6 @@ curl http://localhost:8000/health
 
 **Note:** The following directories contain supplementary tools for data preparation and database management. They are not required for running the main application.
 
-### sample-scripts/
-
-Jupyter notebooks demonstrating:
-- LangGraph agent workflows
-- DataFrame/Graph/Table QA examples
-- Agent composition patterns
-
 ### db/ and objektartenkatalogExtraction/
 
 Utility scripts for:
