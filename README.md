@@ -22,6 +22,8 @@ The system uses a LangGraph-based agent that processes natural language queries 
 - OpenAI GPT-4o for natural language understanding
 - Neo4j for graph database storage
 - FastAPI for REST API with Server-Sent Events streaming
+- React Frontend built with Vite
+- Leaflet for map display
 - Docker for containerized deployment
 
 ## Quick Start
@@ -47,11 +49,14 @@ pip install -r requirements.txt
 
 3. Configure environment variables by creating a `.env` file:
 ```env
-OPENAI_API_KEY=your_openai_api_key
-NEO4J_URI=neo4j+s://your-instance.databases.neo4j.io
-NEO4J_USER=neo4j
-NEO4J_PASSWORD=your_password
-NEO4J_DATABASE=neo4j
+OPENAI_API_KEY=sk-your-api-key-here
+OPENAI_MODEL=gpt-4o
+OPENAI_EMBEDDING_MODEL=text-embedding-3-small
+NEO4J_URI=bolt://localhost:7687
+NEO4J_USERNAME=neo4j
+NEO4J_PASSWORD=your-password-here
+LANGSMITH_API_KEY=
+LANGSMITH_PROJECT=ax_ploration
 API_PORT=8000
 ```
 
@@ -70,6 +75,10 @@ docker-compose up --build
 # Start the API server
 python -m backend.api.server
 
+# Start the frontend
+cd alkis-frontend
+npm run dev
+
 # Or use the CLI directly
 python -m backend.scripts.main "Wie viele Gebäude gibt es in Mitte?"
 ```
@@ -78,13 +87,15 @@ python -m backend.scripts.main "Wie viele Gebäude gibt es in Mitte?"
 
 ```
 AX_Ploration/
+├── frontend/
+│   └── sources/          # React app
 ├── backend/
 │   ├── scripts/          # Core agent implementation
 │   └── api/              # REST API with streaming support
 ├── sample-scripts/       # Jupyter notebook examples
 ├── docker-compose.yml    # Docker deployment configuration
-├── Dockerfile           # Container image definition
-└── requirements.txt     # Python dependencies
+├── Dockerfile            # Container image definition
+└── requirements.txt      # Python dependencies
 ```
 
 ## Backend Scripts
@@ -159,7 +170,7 @@ python -m backend.api.server
 
 #### POST /query
 
-Process natural language queries with optional streaming.
+Process natural language queries with optional streaming and optional spatial filter.
 
 **Request:**
 ```json
@@ -254,6 +265,7 @@ async function queryBuildings(query) {
   const data = await response.json();
   console.log('Answer:', data.final_answer);
   console.log('Results:', data.results);
+  console.log('Results:', data.cypher_query);
   return data;
 }
 
@@ -344,21 +356,7 @@ docker-compose down
 
 ### Configuration
 
-The `docker-compose.yml` uses environment variables from `.env`:
-
-```yaml
-services:
-  ax-ploration:
-    build: .
-    ports:
-      - "${API_PORT:-8000}:${API_PORT:-8000}"
-    environment:
-      - API_HOST=0.0.0.0  # Required for Docker
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - NEO4J_URI=${NEO4J_URI}
-      - NEO4J_USER=${NEO4J_USER}
-      - NEO4J_PASSWORD=${NEO4J_PASSWORD}
-```
+The `docker-compose.yml` uses environment variables from `.env`: [docker-compose.yml](docker-compose.yml)
 
 ### Health Check
 
