@@ -1,0 +1,12 @@
+Planned questions:
+1. Show me all school buildings in Pankow. (specific building function in a district)
+2. Display all public-use buildings in Friedrichshain on the map. (general building function in a district)
+3. What is the nearest kindergarden to 52.5208, 13.4095? (nearest building to a point)
+4. Where are the hospitals within 3km of Alexanderplatz? (buildings of a specific function within a radius)
+5. Can you find all schools in this Polygon? (specific building function in a polygon drawn on the map)
+6. Are there buildings with the function "University" and an area greater than or equal to 2000 m²? (Request buildings with certain property values)
+7. Return the building footprint of the building with the adress Alexanderplatz 1. (geometry of a building with a specific adress)
+
+Realized questions:
+1.-6.: These questions were realized as planned.
+7.: This question does not work for most buldings due to missing adress attribute values in the ALKIS dataset.

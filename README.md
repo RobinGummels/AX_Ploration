@@ -5,6 +5,7 @@ AX_Ploration is an AI-assisted application for querying ALKIS building data (AX_
 ## Table of Contents
 
 - [Overview](#overview)
+- [List of Questions the Application Can Answer](#list-of-questions-the-application-can-answer)
 - [Quick Start](#quick-start)
 - [Project Structure](#project-structure)
 - [Backend Scripts](#backend-scripts)
@@ -25,6 +26,10 @@ The system uses a LangGraph-based agent that processes natural language queries 
 - React Frontend built with Vite
 - Leaflet for map display
 - Docker for containerized deployment
+
+## List of Questions the Application Can Answer
+
+You can find the planned and realized questions for our application [here](example_questions.txt).
 
 ## Quick Start
 
@@ -141,7 +146,7 @@ The agent processes queries through these stages:
 6. **Spatial Comparison** - Performs spatial analysis (for location-based queries)
 7. **Answer Generation** - Formats natural language response
 
-For detailed documentation, see [backend/README.md](backend/README.md).
+For detailed documentation, see [README.md](backend/README.md).
 
 ## REST API
 
